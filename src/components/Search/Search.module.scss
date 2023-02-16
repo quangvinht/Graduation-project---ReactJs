@@ -1,0 +1,26 @@
+@use '../GlobalStyles/GlobalStyles.module.scss' as *;
+
+// @import 'tailwindcss/base';
+// @import 'tailwindcss/components';
+// @import 'tailwindcss/utilities';
+
+.icon-search {
+    color: #7c899c;
+}
+.input-item {
+    background-color: #2f2739;
+    &:focus {
+        background-color: #432275;
+    }
+    &:focus ~ button,
+    a[href] {
+        background-color: #432275;
+    }
+}
+.button-search {
+    border-left: 1px solid #7c899c;
+    background-color: #2f2739;
+}
+.button-close {
+    background-color: #2f2739;
+}

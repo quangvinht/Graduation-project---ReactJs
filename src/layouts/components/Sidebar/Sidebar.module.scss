@@ -1,0 +1,51 @@
+@use '../../../components/GlobalStyles/GlobalStyles.module.scss' as *;
+
+// @import 'tailwindcss/base';
+// @import 'tailwindcss/components';
+// @import 'tailwindcss/utilities';
+.Sidebar {
+    background-color: #231b2e;
+    transition: all 0.5s ease;
+    opacity: 0;
+    transform: translateX(-100%);
+}
+.show {
+    opacity: 1;
+    transform: translateX(0%);
+}
+.navbar {
+}
+.link {
+    opacity: 1;
+
+    border-left: 5px solid transparent;
+    &:hover {
+        background-color: #393243;
+    }
+}
+.logo {
+    height: var(--header-height);
+}
+.active {
+    background-color: #393243;
+    border-left: 5px solid #7200a1;
+}
+.logo-mobile {
+    animation: rotateAnimate 1.5s linear infinite;
+}
+@keyframes rotateAnimate {
+    from {
+        -ms-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -ms-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}

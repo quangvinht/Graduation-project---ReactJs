@@ -1,0 +1,49 @@
+.play-icon-list {
+    opacity: 0;
+    color: black;
+    background-color: white;
+    padding: 15px;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transition: opacity 0.5s ease;
+    transform: translate(-50%, -50%);
+}
+.song-img {
+    height: 300px;
+    &:hover {
+        filter: brightness(80%);
+    }
+}
+.song-img--playlist {
+    transition: all 0.5s ease;
+    &:hover {
+        transform: scale(1.2);
+    }
+}
+.image {
+    &:hover .play-icon-list {
+        opacity: 1;
+    }
+}
+.active {
+    border-radius: 50%;
+    animation: circle 5s linear infinite;
+}
+@keyframes circle {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.title {
+    overflow-wrap: break-word;
+    text-overflow: ellipsis;
+    word-break: break-word;
+}
+.information {
+    left: 22%;
+}

@@ -1,0 +1,145 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+//font:
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;600;700;800;900&display=swap');
+
+:root {
+    --primary: #170f23;
+    --black: #000;
+    --white: white;
+    --text-color: white;
+    --font-family: 'Inter', sans-serif;
+    --body-bg: #170f23;
+    --header-height: 8rem;
+    --header-shrink-height: 5rem;
+    --mobile-width: 600px;
+    --tablet-width: 1024px;
+    --border-radius: 30px;
+    --box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+
+    //DefaultLayout:
+}
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+//fucntion:
+@mixin flex($align-item, $justify-content) {
+    display: flex;
+    align-items: $align-item;
+    justify-content: $justify-content;
+}
+
+@mixin overplay {
+    background-color: rgba(#000, 0.6);
+}
+
+//responsive:
+@mixin mobile {
+    @media only screen and (max-width: 600px) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media only screen and (max-width: 1024px) {
+        @content;
+    }
+}
+
+.mb-3 {
+    margin-bottom: 3rem;
+}
+.mb-2 {
+    margin-bottom: 2rem;
+}
+.section {
+    padding: 0 2rem;
+}
+.section-header {
+    @include flex(center, space-between);
+}
+
+html {
+    font-size: 100%;
+    @include tablet {
+        font-size: 80%;
+    }
+    @include mobile {
+        font-size: 60%;
+    }
+}
+
+body {
+    font-size: 1.6rem;
+    line-height: 1.5;
+    font-weight: 400;
+    background-color: var(--body-bg);
+    text-rendering: optimizeSpeed;
+    // font-family: var(--font-family);
+    color: var(--text-color);
+    overflow-y: overlay;
+    @include mobile {
+        margin-bottom: 3rem;
+    }
+}
+
+//scroolbar CSS:
+
+html *::-webkit-scrollbar {
+    border-radius: 0;
+    width: 8px;
+}
+
+html *::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.15);
+}
+
+html *::-webkit-scrollbar-track {
+    border-radius: 0;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+button,
+input,
+[tabindex] {
+    outline: none;
+    border: none;
+}
+a {
+    color: var(--text-color);
+
+    text-decoration: none;
+}
+@media (hover: hover) {
+    a:hover {
+        color: var(--primary);
+    }
+}
+ul {
+    list-style-type: none;
+}
+li {
+    list-style-type: none;
+}
+
+img {
+    max-width: 100%;
+}
+iframe {
+    border: 0;
+}
+
+a[href] {
+    color: var(--text-color);
+    text-decoration: none;
+    &:hover {
+        color: var(--text-color);
+    }
+}

@@ -1,0 +1,81 @@
+.song {
+    border-bottom: 1px solid #3e5472;
+    border-radius: 10px;
+    &:hover {
+        background-color: hsla(0, 0%, 100%, 0.1);
+    }
+}
+.active {
+    background-color: hsla(0, 0%, 100%, 0.1);
+}
+
+.song-icon,
+.song-artists {
+    color: #9aa5b5;
+}
+.hoverPointer {
+    cursor: pointer;
+    &:hover {
+        color: rgb(114, 63, 114);
+        text-decoration: underline;
+    }
+}
+.song-artists {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    -webkit-line-clamp: 1;
+    .artist:last-child {
+        display: inline-block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+.song-title {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    -webkit-line-clamp: 1;
+}
+.play-icon {
+    top: 30%;
+    left: 70%;
+    transform: translateX(-70%);
+
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+.song-img {
+    &:hover {
+        opacity: 0.7;
+    }
+    &:hover ~ .play-icon {
+        opacity: 1;
+    }
+    &:hover ~ .play-icon-list {
+        opacity: 1;
+    }
+}
+
+.number {
+    color: transparent;
+    -webkit-text-stroke: 1px white;
+}
+.num-1 {
+    -webkit-text-stroke: 1px #4a90e2;
+}
+.num-2 {
+    -webkit-text-stroke: 1px #27bd9c;
+}
+.num-3 {
+    -webkit-text-stroke: 1px #e35050;
+}
+.vip {
+    padding: 0 4px;
+    font-size: 0.7rem;
+    top: -60%;
+}
+.song-infor {
+    overflow: visible;
+}

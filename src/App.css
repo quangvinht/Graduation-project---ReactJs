@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.rhap_container {
+    background-color: transparent;
+    color: white;
+}
+.rhap_button-clear {
+    color: #63337b;
+}
+.rhap_repeat-button {
+    color: ;
+}
+
+.rhap_main-controls-button,
+.rhap_play-pause-button {
+    color: #63337b;
+}
+#rhap_current-time,
+.rhap_total-time {
+    color: white;
+}
+.rhap_progress-filled,
+.rhap_progress-indicator,
+.rhap_volume-filled,
+.rhap_volume-indicator {
+    background-color: #63337b;
+}
+.rhap_download-progress,
+.rhap_volume-bar {
+    background-color: gray;
+}
+
+@media (max-width: 640px) {
+    .rhap_repeat-button,
+    .rhap_volume-button,
+    .rhap_volume-bar-area,
+    .Player_icon-expand__mMNKT {
+        display: none;
+    }
+}
+
+.swiper-button-prev {
+    background-image: url('./assets/images/arrowLeft.svg');
+
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    background-position: center;
+    padding: 20px;
+    border-radius: 50%;
+}
+.swiper-button-next {
+    background-image: url('./assets/images/arrowRight.svg');
+
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    padding: 20px;
+    border-radius: 50%;
+    background-position: center;
+}
+.swiper-button-next::after {
+    display: none;
+}
