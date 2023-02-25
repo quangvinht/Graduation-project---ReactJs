@@ -1,46 +1,80 @@
 import React from 'react';
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
-import { setShowSidebar } from '~/redux/actions/musicAction';
-
-import { useSelector, useDispatch } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
+import Button from '~/components/Button';
+import images from '~/assets/images';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
-import Search from '~/components/Search';
+import { faAddressCard } from '@fortawesome/free-regular-svg-icons';
+import { faRightToBracket } from '@fortawesome/free-solid-svg-icons';
 
 const cx = classNames.bind(styles);
 
 function Header() {
-    const showSideBar = useSelector((state) => state.allMusics.isShowSideBar);
-    const dispatch = useDispatch();
+    //const showSideBar = useSelector((state) => state.allMusics.isShowSideBar);
+    //const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { pathname } = useLocation();
 
     return (
-        <div
-            className={cx('header', [
-                'flex',
-                'items-center',
-                'justify-center',
-                'z-10',
-                'fixed',
-                'top-0',
-                'right-0',
-                'left-0',
-                'lg:left-28',
-                'md:left-40',
-                'md:mx-0',
-                'mx-12',
-            ])}
-        >
-            <FontAwesomeIcon
+        <header className={cx('header', ['flex', 'items-center', 'justify-between', 'p-4', 'h-30'])}>
+            <img
                 onClick={() => {
-                    dispatch(setShowSidebar(!showSideBar));
+                    if (pathname === '/' || pathname === '/register') {
+                        navigate('/');
+                    }
+                    navigate('/home');
                 }}
-                icon={faBars}
-                className={cx('icon-bar', ['md:hidden', 'px-5'])}
+                className={cx('image', [
+                    'object-contain',
+                    'object-center',
+                    'w-32',
+                    'h-3w-32',
+                    'justify-center',
+                    'items-center',
+                ])}
+                src={images.logo}
+                alt="logo"
             />
-
-            <Search />
-        </div>
+            <div className={cx('button-or-avatar')}>
+                {!(pathname === '/' || pathname === '/register') ? (
+                    <div className={cx('avatar-log-out', 'flex', 'items-center')}>
+                        <FontAwesomeIcon
+                            onClick={() => {
+                                navigate('/profile');
+                            }}
+                            icon={faAddressCard}
+                            className={cx('avatar', ['md:text-3xl', 'lg:text-5xl', 'text-gray-300', 'mr-5'])}
+                        />
+                        <FontAwesomeIcon
+                            onClick={() => {
+                                navigate('/');
+                            }}
+                            icon={faRightToBracket}
+                            className={cx('log-out', ['md:text-3xl', 'lg:text-2xl', 'text-gray-300'])}
+                        />
+                    </div>
+                ) : pathname === '/' ? (
+                    <Button
+                        onClick={() => {
+                            navigate('/register');
+                        }}
+                        className={cx('btn', 'py-5', 'px-10', 'rounded-lg')}
+                    >
+                        SIGN UP
+                    </Button>
+                ) : (
+                    <Button
+                        onClick={() => {
+                            navigate('/');
+                        }}
+                        className={cx('btn', 'py-5', 'px-10', 'rounded-lg')}
+                    >
+                        LOG IN
+                    </Button>
+                )}
+            </div>
+        </header>
     );
 }
 

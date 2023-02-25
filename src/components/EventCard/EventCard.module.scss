@@ -1,0 +1,19 @@
+.event-card {
+    border: 1px solid #333;
+    border-radius: 30px;
+    background-color: #657eee;
+
+    box-shadow: var(--box-shadow);
+}
+.type {
+    position: relative;
+}
+.dot {
+    position: absolute;
+    top: 36%;
+    transform: translateX(-36%);
+    width: 9px;
+    height: 9px;
+    background-color: red;
+    border-radius: 50%;
+}

@@ -1,0 +1,24 @@
+@use '../../components/GlobalStyles/GlobalStyles.module.scss' as *;
+
+// .wrapper {
+//     width: 100%;
+//     display: flex;
+//     flex-direction: column;
+// }
+// @mei
+//  .container {
+//     transition: all 0 ease;
+//  }
+// .content {
+//     flex: 1;
+// }
+.header {
+    background-color: #1c4ca0;
+}
+.btn {
+    background-color: var(--primary);
+    color: var(--white);
+    &:hover {
+        background-color: #004df5;
+    }
+}

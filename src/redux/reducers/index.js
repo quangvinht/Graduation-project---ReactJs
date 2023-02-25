@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
-import { musicReducer } from './musicReducer.js';
+import { userReducer } from './userReducer.js';
 
 const reducers = combineReducers({
-    allMusics: musicReducer,
+    allUser: userReducer,
 });
 export default reducers;

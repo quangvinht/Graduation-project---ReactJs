@@ -1,18 +1,13 @@
 //Pages
 import Home from '~/pages/Home/';
-import Chart from '~/pages/Chart/';
-import NewMusic from '~/pages/NewMusic/';
-import Radio from '~/pages/Radio/';
-import Category from '~/pages/Category/';
-import Search from '~/pages/Search/';
-import Album from '~/pages/Album/';
-import Artists from '~/pages/Artists/';
-import DetailCategory from '~/pages/DetailCategory/';
-import Top100 from '~/pages/Top100/';
-import ChartHome from '~/pages/ChartHome/';
+import Login from '~/pages/Login/';
+import Register from '~/pages/Register/';
+import Profile from '~/pages/Profile/';
+import BoardUser from '~/pages/BoardUser/';
+import BoardEvent from '~/pages/BoardEvent/';
 
 //Layout
-// import { HeaderOnly } from '~/layouts';
+import { LoginLayout } from '~/layouts';
 
 //config
 import config from '~/config/';
@@ -20,18 +15,11 @@ import config from '~/config/';
 //public routes:
 const publicRoutes = [
     { path: config.routes.home, component: Home },
-    { path: config.routes.chart, component: Chart },
-    { path: config.routes.newMusic, component: NewMusic },
-    { path: config.routes.radio, component: Radio },
-    { path: config.routes.search, component: Search },
-    { path: config.routes.top100, component: Top100 },
-    { path: config.routes.category, component: Category },
-    { path: config.routes.album, component: Album },
-    { path: config.routes.artists, component: Artists },
-    { path: config.routes.playlist, component: Album },
-    { path: config.routes.chartHome, component: ChartHome },
-
-    { path: config.routes.detailCategory, component: DetailCategory },
+    { path: config.routes.login, component: Login, layout: LoginLayout },
+    { path: config.routes.register, component: Register, layout: LoginLayout },
+    { path: config.routes.profile, component: Profile },
+    { path: config.routes.boardUsers, component: BoardUser },
+    { path: config.routes.boardEvents, component: BoardEvent },
 ];
 
 const privateRoutes = [];

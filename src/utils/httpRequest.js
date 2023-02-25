@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const httpRequest = axios.create({
-    baseURL: 'https://zing-mp3-api.vercel.app/api',
+    baseURL: 'http://localhost:8080/',
 });
 
 export const get = async (path) => {
@@ -10,5 +10,3 @@ export const get = async (path) => {
 };
 
 export default httpRequest;
-
-
