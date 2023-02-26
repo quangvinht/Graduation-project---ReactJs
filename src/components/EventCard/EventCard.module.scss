@@ -1,8 +1,8 @@
 .event-card {
     border: 1px solid #333;
     border-radius: 30px;
-    background-color: #657eee;
-
+    background-color: #e4e9ff;
+    cursor: pointer;
     box-shadow: var(--box-shadow);
 }
 .type {
@@ -16,4 +16,9 @@
     height: 9px;
     background-color: red;
     border-radius: 50%;
+}
+
+.disable {
+    background-color: gray;
+    color: rgb(70, 69, 69) !important;
 }

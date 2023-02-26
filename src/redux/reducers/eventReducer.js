@@ -1,7 +1,9 @@
-import { actionType } from '../constants/userTypes';
+import { actionType } from '../constants/eventTypes';
 
 const initalState = {
     userInfor: [],
+    idUpdateEvent: '',
+    isUpdateEvent: false,
 };
 
 export const userReducer = (state = initalState, { type, payload }) => {
@@ -10,6 +12,12 @@ export const userReducer = (state = initalState, { type, payload }) => {
             return {
                 ...state,
                 userInfor: payload,
+            };
+        case actionType.EDIT_EVENT:
+            return {
+                ...state,
+                idUpdateEvent: payload,
+                isUpdateEvent: true,
             };
 
         default:

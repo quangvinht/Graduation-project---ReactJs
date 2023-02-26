@@ -19,7 +19,7 @@ function DefaultLayout({ children }) {
                     <Header />
                     {!(pathname === '/' || pathname === '/register') && <SideBar />}
 
-                    <div className={cx('content', 'mx-14')}>{children}</div>
+                    <div className={cx('content', 'mx-5')}>{children}</div>
                 </div>
             </div>
         </>

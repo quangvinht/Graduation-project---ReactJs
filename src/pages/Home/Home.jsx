@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import styles from './Home.module.scss';
 import userService from '~/services/userService';
 import axios from 'axios';
-import { getUserInfor } from '~/redux/actions/userAction';
+import { getUserInfor } from '~/redux/actions/eventAction';
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -12,7 +12,7 @@ const cx = classNames.bind(styles);
 const Home = () => {
     const [loading, setLoading] = useState(false);
 
-    const user = useSelector((state) => state.allUser.userInfor);
+    //const user = useSelector((state) => state.allUser.userInfor);
     const dispatch = useDispatch();
 
     useEffect(() => {

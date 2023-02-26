@@ -4,10 +4,21 @@ import styles from './Button.module.scss';
 
 const cx = classNames.bind(styles);
 
-function Button({ children, className, outline = false, onClick = false, stroke = false }) {
+function Button({
+    children,
+    className,
+
+    outline = false,
+    onClick = false,
+    stroke = false,
+    redBtn = false,
+    blackBtn = false,
+}) {
     const classes = cx('Button', {
         outline,
         stroke,
+        redBtn,
+        blackBtn,
         [className]: className,
     });
 

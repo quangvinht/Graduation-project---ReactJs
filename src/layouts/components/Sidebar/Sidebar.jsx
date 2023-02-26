@@ -19,11 +19,11 @@ function SideBar() {
             <MenuList>
                 <MenuItem to={'/board-events'}>
                     <FontAwesomeIcon icon={faCalendarDays} />
-                    <span> Phong trào / Sự kiện</span>
+                    <span className={cx('ml-1')}> Phong trào / Sự kiện</span>
                 </MenuItem>
                 <MenuItem to={'/board-users'}>
                     <FontAwesomeIcon icon={faUserGear} />
-                    <span> Người dùng</span>
+                    <span className={cx('ml-1')}> Người dùng</span>
                 </MenuItem>
             </MenuList>
         </div>

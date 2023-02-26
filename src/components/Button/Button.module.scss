@@ -17,9 +17,27 @@
     }
 }
 .stroke {
-    background-color: violet;
-    border-radius: 20px;
+    border: 1px solid var(--primary);
+}
+
+.redBtn {
+    background-color: rgb(247, 35, 35);
+    color: white;
+    padding: 2px 3px;
+    border-radius: 10px;
+
     &:hover {
-        opacity: 0.8;
+        background-color: rgb(247, 35, 35);
+    }
+}
+.blackBtn {
+    background-color: rgb(31, 23, 23);
+    color: white;
+    padding: 0;
+    padding: 2px 3px;
+    border-radius: 10px;
+
+    &:hover {
+        background-color: rgb(31, 23, 23);
     }
 }
