@@ -18,26 +18,48 @@ const BoardEvent = () => {
     const [pageNumber, setPageNumber] = useState(1);
     const [cardDisabled, setCardDisabled] = useState('');
     const [show, setShow] = useState(true);
+    const [searchValue, setSearchValue] = useState('');
     const eventPerPage = 3;
 
     useEffect(() => {
         setLoading(true);
 
         const getAPIEvent = async () => {
-            await axios
-                .get(`http://localhost:8080/event?page=${pageNumber === 0 ? 1 : pageNumber}&limit=${eventPerPage}`, {})
-                .then((response) => {
-                    setDataEvent(response.data.data);
-                    setTotalEvents(response.data.total);
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+            if (searchValue.length === 0) {
+                await axios
+                    .get(
+                        `http://localhost:8080/event?page=${pageNumber === 0 ? 1 : pageNumber}&limit=${eventPerPage}`,
+                        {},
+                    )
+                    .then((response) => {
+                        setDataEvent(response.data.data);
+                        setTotalEvents(response.data.total);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            } else {
+                await axios
+                    .get(
+                        `http://localhost:8080/event/search/${searchValue}?page=${
+                            pageNumber === 0 ? 1 : pageNumber
+                        }&limit=${eventPerPage}`,
+                        {},
+                    )
+                    .then((response) => {
+                        setDataEvent(response.data.data);
+                        setTotalEvents(response.data.total);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            }
+
             setLoading(false);
         };
 
         getAPIEvent();
-    }, [pageNumber]);
+    }, [pageNumber, searchValue]);
 
     const handleNextPage = () => {
         if (pageNumber >= Math.ceil(totalEvents / eventPerPage)) {
@@ -100,9 +122,19 @@ const BoardEvent = () => {
             </div>
             {show && <EventForm className={cx(`${!show && 'hidden'}`, 'md:block', 'event-form', 'flex-1', 'mr-5')} />}
 
-            <div className={cx('board', 'flex-1', 'flex', 'flex-col', 'md:items-end', 'items-center', 'md:w-full')}>
+            <div className={cx('board', 'flex-1', 'flex', 'flex-col', '', '', 'md:w-full')}>
                 <div className={cx()}>
                     <h4 className={cx('event-list-tag')}>Danh sách sự kiện:</h4>
+                    <div className={cx('search-field', 'flex', 'items-center', '')}>
+                        <input
+                            className={cx('search', 'p-5', 'mr-3', 'my-2', 'w-full')}
+                            value={searchValue}
+                            placeholder="Tìm kiếm..."
+                            onChange={(e) => {
+                                setSearchValue(e.target.value.trim());
+                            }}
+                        />
+                    </div>
                     {dataEvent.map((event) => {
                         return <EventCard id={event.id} key={event._id} data={event} />;
                     })}
