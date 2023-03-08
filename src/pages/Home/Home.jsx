@@ -1,7 +1,7 @@
 import { useEffect, useState, memo } from 'react';
 import classNames from 'classnames/bind';
 import styles from './Home.module.scss';
-import userService from '~/services/userService';
+
 import axios from 'axios';
 import { getUserInfor } from '~/redux/actions/eventAction';
 
@@ -26,12 +26,13 @@ const Home = () => {
                     },
                 })
                 .then((response) => {
-                    axios({
-                        method: 'get',
-                        url: `http://localhost:8080/user/${response.data.sub}`,
-                    }).then(function (response) {
-                        dispatch(getUserInfor(response.data));
-                    });
+                    dispatch(getUserInfor(response.data.sub));
+                    // axios({
+                    //     method: 'get',
+                    //     url: `http://localhost:8080/user/${response.data.sub}`,
+                    // }).then(function (response) {
+                    //     dispatch(getUserInfor(response.data));
+                    // });
                 })
                 .catch((error) => {
                     console.error(error);

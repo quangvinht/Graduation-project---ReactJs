@@ -157,16 +157,14 @@ const Register = () => {
         const createUser = async (email, password) => {
             try {
                 const response = await axios.post('http://localhost:8080/user', {
-                    //  identifyCard,
-                    // birthDateISO,
-                    // phoneNumber,
                     email,
                     password,
                 });
-                console.log(response.data);
+
                 alert('Đăng kí thành công');
                 navigate('/');
             } catch (error) {
+                alert('Email đã tồn tại');
                 console.log(error);
             }
         };

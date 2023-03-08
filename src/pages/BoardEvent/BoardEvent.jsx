@@ -1,9 +1,10 @@
 import { useEffect, useState, memo } from 'react';
 import classNames from 'classnames/bind';
 import styles from './BoardEvent.module.scss';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import axios from 'axios';
 import EventCard from '~/components/EventCard';
-import ReactPaginate from 'react-paginate';
+
 import Button from '~/components/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
@@ -16,11 +17,12 @@ const BoardEvent = () => {
     const [loading, setLoading] = useState(false);
     const [totalEvents, setTotalEvents] = useState(0);
     const [pageNumber, setPageNumber] = useState(1);
-    const [cardDisabled, setCardDisabled] = useState('');
+
     const [show, setShow] = useState(true);
     const [searchValue, setSearchValue] = useState('');
     const eventPerPage = 3;
 
+    //call API:
     useEffect(() => {
         setLoading(true);
 
@@ -61,6 +63,7 @@ const BoardEvent = () => {
         getAPIEvent();
     }, [pageNumber, searchValue]);
 
+    //handle pagination button:
     const handleNextPage = () => {
         if (pageNumber >= Math.ceil(totalEvents / eventPerPage)) {
             setPageNumber(Math.ceil(totalEvents / eventPerPage) - 1);
@@ -77,6 +80,7 @@ const BoardEvent = () => {
         setPageNumber((prevValue) => prevValue - 1);
     };
 
+    // check kích thước màn hình ;
     const [screenSize, setScreenSize] = useState({
         width: window.innerWidth,
         height: window.innerHeight,
@@ -95,6 +99,19 @@ const BoardEvent = () => {
 
         window.addEventListener('resize', handleResize);
     }, [screenSize.width]);
+
+    // dragable event:
+    function onDragEnd(result) {
+        if (!result.destination) {
+            return;
+        }
+
+        const newItems = Array.from(dataEvent);
+        const [removed] = newItems.splice(result.source.index, 1);
+        newItems.splice(result.destination.index, 0, removed);
+
+        setDataEvent(newItems);
+    }
 
     return (
         <div className={cx('board-event', 'flex', 'flex-col', 'md:flex-row', 'md:justify-between', 'justify-center')}>
@@ -123,8 +140,9 @@ const BoardEvent = () => {
             {show && <EventForm className={cx(`${!show && 'hidden'}`, 'md:block', 'event-form', 'flex-1', 'mr-5')} />}
 
             <div className={cx('board', 'flex-1', 'flex', 'flex-col', '', '', 'md:w-full')}>
-                <div className={cx()}>
+                <div className={cx('event-board')}>
                     <h4 className={cx('event-list-tag')}>Danh sách sự kiện:</h4>
+
                     <div className={cx('search-field', 'flex', 'items-center', '')}>
                         <input
                             className={cx('search', 'p-5', 'mr-3', 'my-2', 'w-full')}
@@ -135,10 +153,31 @@ const BoardEvent = () => {
                             }}
                         />
                     </div>
-                    {dataEvent.map((event) => {
-                        return <EventCard id={event.id} key={event._id} data={event} />;
-                    })}
+
+                    <DragDropContext onDragEnd={onDragEnd}>
+                        <Droppable droppableId={dataEvent}>
+                            {(provided) => (
+                                <div {...provided.droppableProps} ref={provided.innerRef}>
+                                    {dataEvent.map((event, index) => (
+                                        <Draggable key={event._id} draggableId={event._id} index={index}>
+                                            {(provided) => (
+                                                <div
+                                                    {...provided.draggableProps}
+                                                    {...provided.dragHandleProps}
+                                                    ref={provided.innerRef}
+                                                >
+                                                    <EventCard id={event.id} key={event._id} data={event} />
+                                                </div>
+                                            )}
+                                        </Draggable>
+                                    ))}
+                                    {provided.placeholder}
+                                </div>
+                            )}
+                        </Droppable>
+                    </DragDropContext>
                 </div>
+
                 <div className={cx('pagination', 'flex', 'self-center', 'lg:self-end')}>
                     <Button
                         className={cx(

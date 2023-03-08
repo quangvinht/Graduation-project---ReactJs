@@ -17,7 +17,12 @@ function DefaultLayout({ children }) {
             <div className={cx('wrapper', ['font-inter', 'h-screen'])}>
                 <div className={cx('folder', ['flex', 'flex-col'])}>
                     <Header />
-                    {!(pathname === '/' || pathname === '/register') && <SideBar />}
+                    {!(
+                        pathname === '/' ||
+                        pathname === '/register' ||
+                        pathname === '/profile' ||
+                        pathname === '/profile/edit'
+                    ) && <SideBar />}
 
                     <div className={cx('content', 'mx-5')}>{children}</div>
                 </div>

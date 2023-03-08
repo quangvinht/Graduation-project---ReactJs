@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import styles from './EventCard.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendarCheck, faPenToSquare } from '@fortawesome/free-regular-svg-icons';
+import { faCalendarCheck, faPenToSquare, faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import Button from '../Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { editEvent } from '~/redux/actions/eventAction';
 import axios from 'axios';
+import { faToolbox, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const cx = classNames.bind(styles);
 
@@ -15,6 +16,10 @@ function EventCard({ data, className, onClick = false, onDoubleClick = false, di
         disabled,
         [className]: className,
     });
+
+    const [datetime, setDatetime] = useState(getCurrentDateTime());
+    const [isDisable, setIsDisable] = useState(false);
+
     function getCurrentDateTime() {
         const now = new Date();
         const year = now.getFullYear();
@@ -25,18 +30,17 @@ function EventCard({ data, className, onClick = false, onDoubleClick = false, di
         const second = now.getSeconds().toString().padStart(2, '0');
         return `${year}-${month}-${date}T${'23'}:${'59'}:${'59'}`;
     }
-    const converDate = (time) => {
-        return `${time.getDate()}/${time.getMonth()}/${time.getFullYear()} lúc ${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`;
+    const convertDate = (time) => {
+        return `${time.getDate()}/${
+            time.getMonth() + 1
+        }/${time.getFullYear()} lúc ${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`;
     };
-
-    const [datetime, setDatetime] = useState(getCurrentDateTime());
-    const [isDisable, setIsDisable] = useState(false);
 
     const dateCurrent = new Date(datetime);
     const dateEndEvent = new Date(data.endDate);
     const dateStartEvent = new Date(data.startDate);
 
-    const isUpdate = useSelector((state) => state.allEvents.isUpdateEvent);
+    //const isUpdate = useSelector((state) => state.allEvents.isUpdateEvent);
     const dispatch = useDispatch();
 
     const handleDeleteEvent = (id) => {
@@ -82,7 +86,8 @@ function EventCard({ data, className, onClick = false, onDoubleClick = false, di
                         `${data.type === 'quan trọng' && 'bg-red-600'}`,
                         `${data.type === 'bình thường' && 'bg-green-600'}`,
                         `${data.type === 'ưu tiên' && 'bg-blue-600'}`,
-
+                        'w-1/5',
+                        'text-center',
                         // 'bg-red-600',
                         'text-yellow-50',
                         'p-1',
@@ -103,13 +108,13 @@ function EventCard({ data, className, onClick = false, onDoubleClick = false, di
                 <div>
                     <FontAwesomeIcon icon={faCalendarCheck} />
 
-                    <span className={cx('start-date', 'ml-1')}>{converDate(dateStartEvent)}</span>
+                    <span className={cx('start-date', 'ml-1')}>{convertDate(dateStartEvent)}</span>
                 </div>
 
                 <div>
                     <FontAwesomeIcon icon={faCalendarCheck} />
 
-                    <span className={cx('end-date', 'ml-1')}>{converDate(dateEndEvent)}</span>
+                    <span className={cx('end-date', 'ml-1')}>{convertDate(dateEndEvent)}</span>
                 </div>
             </div>
             <div className={cx('btn-event', 'flex')}>
@@ -117,19 +122,19 @@ function EventCard({ data, className, onClick = false, onDoubleClick = false, di
                     onClick={() => {
                         dispatch(editEvent(data._id));
                     }}
-                    className={cx('md:w-1/5', 'w-2/6')}
+                    className={cx('lg:w-1/5', 'w-2/6')}
                     blackBtn
                 >
-                    Edit
+                    <FontAwesomeIcon icon={faToolbox} className={cx('edit-icon', 'mr-1')} /> Edit
                 </Button>
                 <Button
                     onClick={() => {
                         handleDeleteEvent(data._id);
                     }}
-                    className={cx('md:w-1/5', 'w-2/6', 'ml-1')}
+                    className={cx('lg:w-1/5', 'w-2/6', 'ml-1')}
                     redBtn
                 >
-                    Delete
+                    <FontAwesomeIcon icon={faTrashCan} className={cx('delete-icon', 'mr-1')} /> Delete
                 </Button>
             </div>
         </div>
