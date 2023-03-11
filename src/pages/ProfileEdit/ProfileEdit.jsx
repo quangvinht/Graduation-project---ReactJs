@@ -16,14 +16,16 @@ function ProfileEdit({}) {
     const navigate = useNavigate();
     const idUserInfor = useSelector((state) => state.allEvents.userInfor);
     const dispatch = useDispatch();
+    const profile = JSON.parse(localStorage.getItem('profile'));
+    console.log(profile);
 
     const [loading, setLoading] = useState(false);
-    const [userName, setUserName] = useState();
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
-    const [identifyCard, setIdentifyCard] = useState();
-    const [birthDate, setBirthDate] = useState();
-    const [phoneNumber, setPhoneNumber] = useState();
+    const [userName, setUserName] = useState(profile.userName);
+    const [email, setEmail] = useState(profile.email);
+    const [password, setPassword] = useState(profile.password);
+    const [identifyCard, setIdentifyCard] = useState(profile.identifyCard);
+    const [birthDate, setBirthDate] = useState(profile.birthDate);
+    const [phoneNumber, setPhoneNumber] = useState(profile.phoneNumber);
 
     const handlePhoneNumber = (event) => {
         const phoneNumber = event.target.value.replace(/\D/g, '');
@@ -33,29 +35,29 @@ function ProfileEdit({}) {
             setPhoneNumber(phoneNumber);
         }
     };
-    useEffect(() => {
-        setLoading(true);
+    // useEffect(() => {
+    //     setLoading(true);
 
-        const getProfileUser = async () => {
-            await axios({
-                method: 'get',
-                url: `http://localhost:8080/user/all/${idUserInfor}`,
-            })
-                .then((response) => {
-                    setUserName(response.data.userName);
-                    setEmail(response.data.email);
-                    setPassword(response.data.password);
-                    setIdentifyCard(response.data.identifyCard);
-                    setBirthDate(response.data.birthDate);
-                    setPhoneNumber(response.data.phoneNumber);
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-        };
-        getProfileUser();
-        setLoading(false);
-    }, []);
+    //     const getProfileUser = async () => {
+    //         await axios({
+    //             method: 'get',
+    //             url: `http://localhost:8080/user/all/${idUserInfor}`,
+    //         })
+    //             .then((response) => {
+    //                 setUserName(response.data.userName);
+    //                 setEmail(response.data.email);
+    //                 setPassword(response.data.password);
+    //                 setIdentifyCard(response.data.identifyCard);
+    //                 setBirthDate(response.data.birthDate);
+    //                 setPhoneNumber(response.data.phoneNumber);
+    //             })
+    //             .catch((error) => {
+    //                 console.error(error);
+    //             });
+    //     };
+    //     getProfileUser();
+    //     setLoading(false);
+    // }, []);
 
     const handleEditProfile = (e) => {
         e.preventDefault();

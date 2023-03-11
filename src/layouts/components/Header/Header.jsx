@@ -48,6 +48,12 @@ function Header() {
                         />
                         <FontAwesomeIcon
                             onClick={() => {
+                                //sau 1 ngày thì xóa data người dùng
+                                setTimeout(() => {
+                                    localStorage.removeItem('user');
+                                    localStorage.removeItem('profile');
+                                }, 86400000);
+
                                 navigate('/');
                             }}
                             icon={faRightToBracket}
