@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarCheck, faPenToSquare, faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import Button from '../Button';
 import { useDispatch, useSelector } from 'react-redux';
-import { editEvent } from '~/redux/actions/eventAction';
+import { addAndEditParticipant, editEvent, editParticipant } from '~/redux/actions/eventAction';
 import axios from 'axios';
 import { faToolbox, faTrash } from '@fortawesome/free-solid-svg-icons';
 
@@ -121,6 +121,20 @@ function EventCard({ data, className, onClick = false, onDoubleClick = false, di
                 <Button
                     onClick={() => {
                         dispatch(editEvent(data._id));
+                        dispatch(
+                            editParticipant(
+                                data.participants.map((participant) => {
+                                    return { label: participant.email, value: participant._id };
+                                }),
+                            ),
+                        );
+                        dispatch(
+                            addAndEditParticipant(
+                                data.participants.map((participant) => {
+                                    return { label: participant.email, value: participant._id };
+                                }),
+                            ),
+                        );
                     }}
                     className={cx('lg:w-1/5', 'w-2/6')}
                     blackBtn

@@ -223,17 +223,17 @@ const Register = () => {
             >
                 <div className={cx('self-center', 'wrapper', 'lg:text-xl', 'md:text-xs', 'text-sm')}>
                     <h1 className={cx('playful')} aria-label="Wash your hands">
-                        <span aria-hidden="true">C</span>
-                        <span aria-hidden="true">R</span>
-                        <span aria-hidden="true">E</span>
-                        <span aria-hidden="true">A</span>
-                        <span aria-hidden="true">T</span>
-                        <span aria-hidden="true">E</span>
+                        <span aria-hidden="true">Đ</span>
+                        <span aria-hidden="true">Ă</span>
+                        <span aria-hidden="true">N</span>
+                        <span aria-hidden="true">G</span>
+
                         <span aria-hidden="true"> </span>
-                        <span aria-hidden="true">U</span>
-                        <span aria-hidden="true">S</span>
-                        <span aria-hidden="true">E</span>
-                        <span aria-hidden="true">R</span>
+                        <span aria-hidden="true">K</span>
+                        <span aria-hidden="true">Ý</span>
+                        <span aria-hidden="true"> </span>
+
+                        <span aria-hidden="true">!</span>
                     </h1>
                 </div>
 

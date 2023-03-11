@@ -5,6 +5,7 @@ import { publicRoutes } from '~/routes/routes';
 import DefaultLayout from '~/layouts';
 function App() {
     var audioPlayer = document.createElement('audio');
+
     return (
         <Router>
             <div className="App">

@@ -2,15 +2,20 @@ import React from 'react';
 import classNames from 'classnames/bind';
 import styles from './ProfileEdit.module.scss';
 import { useEffect, useState, memo } from 'react';
+import validator from 'validator';
+
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import Button from '~/components/Button';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { getUserInfor, setProfile } from '~/redux/actions/eventAction';
+
 const cx = classNames.bind(styles);
 
 function ProfileEdit({}) {
     const navigate = useNavigate();
     const idUserInfor = useSelector((state) => state.allEvents.userInfor);
+    const dispatch = useDispatch();
 
     const [loading, setLoading] = useState(false);
     const [userName, setUserName] = useState();
@@ -34,7 +39,7 @@ function ProfileEdit({}) {
         const getProfileUser = async () => {
             await axios({
                 method: 'get',
-                url: `http://localhost:8080/user/${idUserInfor}`,
+                url: `http://localhost:8080/user/all/${idUserInfor}`,
             })
                 .then((response) => {
                     setUserName(response.data.userName);
@@ -54,6 +59,20 @@ function ProfileEdit({}) {
 
     const handleEditProfile = (e) => {
         e.preventDefault();
+        const validatePassword = (password) => {
+            const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+            return re.test(password);
+        };
+
+        if (validator.isEmpty(email) || validator.isEmpty(password)) {
+            alert('Không được bỏ trống');
+        } else if (!validator.isEmail(email)) {
+            alert('Email không hợp lệ.');
+            return;
+        } else if (!validatePassword(password)) {
+            alert('Mật khẩu phải có ít nhất 8 ký tự và chứa ít nhất một chữ hoa, một chữ thường và một số.');
+            return;
+        }
 
         axios
             .patch(`http://localhost:8080/user/${idUserInfor}`, {
@@ -66,8 +85,44 @@ function ProfileEdit({}) {
             })
             .then((response) => {
                 alert('Chỉnh sửa thành công cho:' + email);
-                //window.location.reload();
+                //after edit then set user infor again:
                 navigate('/profile');
+                axios
+                    .post('http://localhost:8080/auth/login', { email, password })
+                    .then((response) => {
+                        if (response.data.access_token) {
+                            localStorage.setItem('user', JSON.stringify(response.data.access_token));
+                            // get access token:
+                            axios
+                                .get('http://localhost:8080/profile', {
+                                    headers: {
+                                        Authorization: `Bearer ${JSON.parse(localStorage.getItem('user'))}`,
+                                    },
+                                })
+                                .then((response) => {
+                                    dispatch(getUserInfor(response.data.sub));
+                                    //get infor of user :
+                                    axios({
+                                        method: 'get',
+                                        url: `http://localhost:8080/user/all/${response.data.sub}`,
+                                    })
+                                        .then((response) => {
+                                            //setData(response.data);
+                                            dispatch(setProfile(response.data));
+                                        })
+                                        .catch((error) => {
+                                            console.error(error);
+                                        });
+                                })
+                                .catch((error) => {
+                                    console.error(error);
+                                });
+                            navigate('/profile');
+                        }
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
             })
             .catch((error) => {
                 alert('Chỉnh sửa thất bại cho:' + email);

@@ -3,10 +3,11 @@ import classNames from 'classnames/bind';
 import styles from './EventForm.module.scss';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { editEvent } from '~/redux/actions/eventAction';
+import { editEvent, editParticipant, addAndEditParticipant } from '~/redux/actions/eventAction';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import Button from '../Button';
+import UserSuggest from '../UserSuggest';
 
 const cx = classNames.bind(styles);
 
@@ -15,6 +16,19 @@ function EventForm({ data, className, onClick = false, onDoubleClick = false, di
         disabled,
         [className]: className,
     });
+
+    // thêm thành viên
+
+    const participants = useSelector((state) => state.allEvents.participants.map((participant) => participant.value));
+
+    const addAndEditParticipants = useSelector((state) =>
+        state.allEvents.addAndEditParticipants.map((participant) => participant.value),
+    );
+
+    const editParticipants = useSelector((state) =>
+        state.allEvents.editParticipants.map((participant) => participant.value),
+    );
+
     const options = ['ưu tiên', 'bình thường', 'quan trọng'];
     const defaultOption = options[0];
     const [title, setTitle] = useState('');
@@ -26,6 +40,10 @@ function EventForm({ data, className, onClick = false, onDoubleClick = false, di
     const idUpdate = useSelector((state) => state.allEvents.idUpdateEvent);
     const isUpdate = useSelector((state) => state.allEvents.isUpdateEvent);
     const [loading, setLoading] = useState(false);
+
+    // const participantUpdate = [...participants, ...editParticipants];
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
         setLoading(true);
@@ -40,6 +58,13 @@ function EventForm({ data, className, onClick = false, onDoubleClick = false, di
                         setStartDate(response.data.startDate);
                         setEndDate(response.data.endDate);
                         setType(response.data.type);
+                        // dispatch(
+                        //     editParticipant(
+                        //         response.data.participants.map((participant) => {
+                        //             return { label: participant.email, value: participant._id };
+                        //         }),
+                        //     ),
+                        // );
                     }
                 })
                 .catch((error) => {
@@ -50,23 +75,54 @@ function EventForm({ data, className, onClick = false, onDoubleClick = false, di
 
         getAPIEvent();
     }, [idUpdate]);
+
     const handleEventForm = (e) => {
         e.preventDefault();
         if (isUpdate) {
-            axios
-                .patch(`http://localhost:8080/event/${idUpdate}`, { title, description, startDate, endDate, type })
-                .then((response) => {
-                    alert('Chỉnh sửa thành công:' + title);
-                    window.location.reload();
-                })
-                .catch((error) => {
-                    alert('Chỉnh sửa thất bại:' + title);
+            // dispatch(addAndEditParticipant([...editParticipants]));
 
-                    console.log(error);
-                });
+            if (participants.length > 0) {
+                axios
+                    .patch(`http://localhost:8080/event/${idUpdate}`, {
+                        title,
+                        description,
+                        startDate,
+                        endDate,
+                        type,
+                        participants: [...addAndEditParticipants, ...editParticipants],
+                    })
+                    .then((response) => {
+                        alert('Chỉnh sửa thành công:' + title);
+                        window.location.reload();
+                    })
+                    .catch((error) => {
+                        alert('Chỉnh sửa thất bại:' + title);
+
+                        console.log(error);
+                    });
+            } else {
+                axios
+                    .patch(`http://localhost:8080/event/${idUpdate}`, {
+                        title,
+                        description,
+                        startDate,
+                        endDate,
+                        type,
+                        participants: [...addAndEditParticipants, ...editParticipants],
+                    })
+                    .then((response) => {
+                        alert('Chỉnh sửa thành công:' + title);
+                        window.location.reload();
+                    })
+                    .catch((error) => {
+                        alert('Chỉnh sửa thất bại:' + title);
+
+                        console.log(error);
+                    });
+            }
         } else {
             axios
-                .post('http://localhost:8080/event', { title, description, startDate, endDate, type })
+                .post('http://localhost:8080/event', { title, description, startDate, endDate, type, participants })
                 .then((response) => {
                     alert('Thêm thành công:' + title);
                     window.location.reload();
@@ -128,6 +184,13 @@ function EventForm({ data, className, onClick = false, onDoubleClick = false, di
                         onChange={(e) => setStartDate(e.target.value)}
                     />
                 </div>
+                <div className={cx('form-group', 'flex', 'flex-col', 'gap-1')}>
+                    <label htmlFor="type" className={cx('')}>
+                        Thành viên:
+                    </label>
+
+                    <UserSuggest isUpdated={isUpdate} />
+                </div>
 
                 <div className={cx('form-group', 'flex', 'flex-col', 'gap-1')}>
                     <label htmlFor="endDate" className={cx('')}>
@@ -164,6 +227,7 @@ function EventForm({ data, className, onClick = false, onDoubleClick = false, di
                         placeholder="Select an option"
                     />
                 </div>
+
                 <Button className={cx('lg:w-1/2', 'w-1/2', 'md:w-3/5', 'self-center')}>
                     {isUpdate ? 'Chỉnh sửa ' : 'Thêm'}
                 </Button>

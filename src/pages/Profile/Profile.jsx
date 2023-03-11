@@ -9,29 +9,30 @@ import { useLocation, useNavigate } from 'react-router-dom';
 const cx = classNames.bind(styles);
 
 const Profile = () => {
-    const idUserInfor = useSelector((state) => state.allEvents.userInfor);
+    const profile = useSelector((state) => state.allEvents.profile);
+    //const idUserInfor = useSelector((state) => state.allEvents.userInfor);
     const [loading, setLoading] = useState(false);
-    const [data, setData] = useState([]);
+    //const [data, setData] = useState(profile);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        setLoading(true);
+    // useEffect(() => {
+    //     setLoading(true);
 
-        const getProfileUser = async () => {
-            await axios({
-                method: 'get',
-                url: `http://localhost:8080/user/${idUserInfor}`,
-            })
-                .then((response) => {
-                    setData(response.data);
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-        };
-        getProfileUser();
-        setLoading(false);
-    }, []);
+    //     const getProfileUser = async () => {
+    //         await axios({
+    //             method: 'get',
+    //             url: `http://localhost:8080/user/all/${idUserInfor}`,
+    //         })
+    //             .then((response) => {
+    //                 setData(response.data);
+    //             })
+    //             .catch((error) => {
+    //                 console.error(error);
+    //             });
+    //     };
+    //     getProfileUser();
+    //     setLoading(false);
+    // }, []);
 
     return (
         <>
@@ -52,7 +53,7 @@ const Profile = () => {
                     >
                         <h5 className={cx('lable', 'word-break', 'md:w-1/5', 'w-1/3')}>ID:</h5>
                         <span className={cx('infor', 'py-3', 'px-4', '', 'md:w-4/5', 'w-2/3', 'break-words')}>
-                            {data._id}
+                            {profile._id}
                         </span>
                     </div>
                     <div
@@ -68,7 +69,7 @@ const Profile = () => {
                     >
                         <h5 className={cx('lable', 'word-break', 'md:w-1/5', 'w-1/3')}>Tên người dùng:</h5>
                         <span className={cx('infor', 'py-3', 'px-4', '', 'md:w-4/5', 'w-2/3', 'break-words')}>
-                            {data.userName ? data.userName : 'Tên chưa được đặt'}
+                            {profile.userName ? profile.userName : 'Tên chưa được đặt'}
                         </span>
                     </div>
                     <div
@@ -84,7 +85,7 @@ const Profile = () => {
                     >
                         <h5 className={cx('lable', 'word-break', 'md:w-1/5', 'w-1/3')}>Email:</h5>
                         <span className={cx('infor', 'py-3', 'px-4', '', 'md:w-4/5', 'w-2/3', 'break-words')}>
-                            {data.email}
+                            {profile.email}
                         </span>
                     </div>
                     <div
@@ -99,7 +100,7 @@ const Profile = () => {
                         )}
                     >
                         <h5 className={cx('lable', 'word-break', 'md:w-1/5', 'w-1/3')}>Mật khẩu:</h5>
-                        <span className={cx('infor', 'py-3', 'px-4', '', 'md:w-4/5', 'w-2/3')}>{data.password}</span>
+                        <span className={cx('infor', 'py-3', 'px-4', '', 'md:w-4/5', 'w-2/3')}>{profile.password}</span>
                     </div>
                     <div
                         className={cx(
@@ -114,7 +115,7 @@ const Profile = () => {
                     >
                         <h5 className={cx('lable', 'word-break', 'md:w-1/5', 'w-1/3')}>CMND/ CCCD:</h5>
                         <span className={cx('infor', 'py-3', 'px-4', '', 'md:w-4/5', 'w-2/3', 'break-words')}>
-                            {data.identifyCard || '*********'}
+                            {profile.identifyCard || '*********'}
                         </span>
                     </div>
                     <div
@@ -130,7 +131,7 @@ const Profile = () => {
                     >
                         <h5 className={cx('lable', 'word-break', 'md:w-1/5', 'w-1/3')}>Ngày sinh:</h5>
                         <span className={cx('infor', 'py-3', 'px-4', '', 'md:w-4/5', 'w-2/3', 'break-words')}>
-                            {data.birthDate || 'YYYY-MM-DD'}
+                            {profile.birthDate || 'YYYY-MM-DD'}
                         </span>
                     </div>
                     <div
@@ -146,7 +147,7 @@ const Profile = () => {
                     >
                         <h5 className={cx('lable', 'word-break', 'md:w-1/5', 'w-1/3')}>SĐT:</h5>
                         <span className={cx('infor', 'py-3', 'px-4', '', 'md:w-4/5', 'w-2/3', 'break-words')}>
-                            {data.phoneNumber || 'XXXXXXXXXXX'}
+                            {profile.phoneNumber || 'XXXXXXXXXXX'}
                         </span>
                     </div>
                     <div
@@ -162,7 +163,7 @@ const Profile = () => {
                     >
                         <h5 className={cx('lable', 'word-break', 'md:w-1/5')}>Ngày tạo:</h5>
                         <span className={cx('infor', 'py-3', 'px-4', '', 'md:w-4/5', 'w-2/3', 'break-words')}>
-                            {data.createdAt}
+                            {profile.createdAt}
                         </span>
                     </div>
                     <Button

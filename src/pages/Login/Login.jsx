@@ -5,6 +5,9 @@ import Button from '~/components/Button';
 import axios from 'axios';
 import validator from 'validator';
 import { useNavigate } from 'react-router-dom';
+import { getUserInfor, setProfile } from '~/redux/actions/eventAction';
+
+import { useDispatch, useSelector } from 'react-redux';
 
 const cx = classNames.bind(styles);
 
@@ -12,6 +15,7 @@ const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const dispatch = useDispatch();
 
     const [isRightLogIn, setIsRightLogIn] = useState(true);
 
@@ -30,14 +34,40 @@ const Login = () => {
     //     getApiHome();
     // }, []);
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
 
-        axios
+        //Login:
+        await axios
             .post('http://localhost:8080/auth/login', { email, password })
             .then((response) => {
                 if (response.data.access_token) {
                     localStorage.setItem('user', JSON.stringify(response.data.access_token));
+                    // get access token:
+                    axios
+                        .get('http://localhost:8080/profile', {
+                            headers: {
+                                Authorization: `Bearer ${JSON.parse(localStorage.getItem('user'))}`,
+                            },
+                        })
+                        .then((response) => {
+                            dispatch(getUserInfor(response.data.sub));
+                            //get infor of user :
+                            axios({
+                                method: 'get',
+                                url: `http://localhost:8080/user/all/${response.data.sub}`,
+                            })
+                                .then((response) => {
+                                    //setData(response.data);
+                                    dispatch(setProfile(response.data));
+                                })
+                                .catch((error) => {
+                                    console.error(error);
+                                });
+                        })
+                        .catch((error) => {
+                            console.error(error);
+                        });
                     navigate('/home');
                 }
             })
@@ -79,13 +109,16 @@ const Login = () => {
             >
                 <div className={cx('self-center', 'wrapper', 'lg:text-xl', 'md:text-xs', 'text-sm')}>
                     <h1 className={cx('playful')} aria-label="Wash your hands">
-                        <span aria-hidden="true">W</span>
-                        <span aria-hidden="true">E</span>
-                        <span aria-hidden="true">L</span>
+                        <span aria-hidden="true">x</span>
+                        <span aria-hidden="true">I</span>
+                        <span aria-hidden="true">N</span>
+                        <span aria-hidden="true"> </span>
                         <span aria-hidden="true">C</span>
+                        <span aria-hidden="true">H</span>
+                        <span aria-hidden="true">À</span>
                         <span aria-hidden="true">O</span>
-                        <span aria-hidden="true">M</span>
-                        <span aria-hidden="true">E</span>
+                        <span aria-hidden="true"> </span>
+
                         <span aria-hidden="true">!</span>
                     </h1>
                 </div>

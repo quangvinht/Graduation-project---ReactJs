@@ -12,3 +12,30 @@ export const editEvent = (data) => {
         payload: data,
     };
 };
+
+export const addParticipant = (data) => {
+    return {
+        type: actionType.ADD_PARTICIPANT,
+        payload: data,
+    };
+};
+export const editParticipant = (data) => {
+    return {
+        type: actionType.EDIT_PARTICIPANT,
+        payload: data,
+    };
+};
+
+export const addAndEditParticipant = (data) => {
+    return {
+        type: actionType.ADD_EDIT_PARTICIPANT,
+        payload: data,
+    };
+};
+
+export const setProfile = (data) => {
+    return {
+        type: actionType.SET_PROFILE,
+        payload: data,
+    };
+};
