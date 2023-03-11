@@ -60,6 +60,7 @@ const Login = () => {
                                 .then((response) => {
                                     //setData(response.data);
                                     dispatch(setProfile(response.data));
+                                    localStorage.setItem('profile', JSON.stringify(response.data));
                                 })
                                 .catch((error) => {
                                     console.error(error);

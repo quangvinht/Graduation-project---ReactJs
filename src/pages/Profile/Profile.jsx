@@ -9,7 +9,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 const cx = classNames.bind(styles);
 
 const Profile = () => {
-    const profile = useSelector((state) => state.allEvents.profile);
+    // const profile = useSelector((state) => state.allEvents.profile);
+    const profile = JSON.parse(localStorage.getItem('profile'));
+
     //const idUserInfor = useSelector((state) => state.allEvents.userInfor);
     const [loading, setLoading] = useState(false);
     //const [data, setData] = useState(profile);
