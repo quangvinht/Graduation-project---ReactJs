@@ -39,3 +39,10 @@ export const setProfile = (data) => {
         payload: data,
     };
 };
+
+export const setModalIsOpen = (data) => {
+    return {
+        type: actionType.SET_MODAL_IS_OPEN,
+        payload: data,
+    };
+};

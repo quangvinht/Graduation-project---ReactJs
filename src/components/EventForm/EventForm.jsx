@@ -111,7 +111,7 @@ function EventForm({ data, className, onClick = false, onDoubleClick = false, di
                         participants: [...addAndEditParticipants, ...editParticipants],
                     })
                     .then((response) => {
-                        alert('Chỉnh sửa thành công:' + title);
+                        alert('Chỉnh sửa thành công: ' + title);
                         window.location.reload();
                     })
                     .catch((error) => {
@@ -124,11 +124,11 @@ function EventForm({ data, className, onClick = false, onDoubleClick = false, di
             axios
                 .post('http://localhost:8080/event', { title, description, startDate, endDate, type, participants })
                 .then((response) => {
-                    alert('Thêm thành công:' + title);
+                    alert('Thêm thành công: ' + title);
                     window.location.reload();
                 })
                 .catch((error) => {
-                    alert('Thêm thất bại:' + title);
+                    alert('Thêm thất bại: ' + title);
 
                     console.log(error);
                 });

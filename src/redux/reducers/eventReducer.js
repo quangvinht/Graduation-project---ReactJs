@@ -8,6 +8,7 @@ const initalState = {
     editParticipants: [],
     addAndEditParticipants: [],
     profile: [],
+    modalIsOpen: false,
 };
 
 export const userReducer = (state = initalState, { type, payload }) => {
@@ -47,6 +48,11 @@ export const userReducer = (state = initalState, { type, payload }) => {
                     ...payload,
                     ...initalState.editParticipants,
                 ],
+            };
+        case actionType.SET_MODAL_IS_OPEN:
+            return {
+                ...state,
+                modalIsOpen: payload,
             };
 
         default:

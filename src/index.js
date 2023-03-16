@@ -4,6 +4,7 @@ import App from '~/App';
 import './App.css';
 import reportWebVitals from './reportWebVitals';
 import GlobalStyles from '~/components/GlobalStyles/GlobalStyles';
+import ErrorBoundary from './ErrorBoundary.jsx';
 
 import { Provider } from 'react-redux';
 import store from '~/redux/store';
@@ -11,11 +12,13 @@ import store from '~/redux/store';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
-        <GlobalStyles>
-            <Provider store={store}>
-                <App />
-            </Provider>
-        </GlobalStyles>
+        <ErrorBoundary fallback="Error  ^_^....">
+            <GlobalStyles>
+                <Provider store={store}>
+                    <App />
+                </Provider>
+            </GlobalStyles>
+        </ErrorBoundary>
     </React.StrictMode>,
 );
 
