@@ -21,3 +21,14 @@
 .css-13cymwt-control {
     border-radius: 20px !important;
 }
+.select__control,
+.css-13cymwt-control {
+    border: 1px solid black !important;
+    width: 98% !important;
+    margin-left: 0.75rem;
+}
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}

@@ -17,7 +17,6 @@ function ProfileEdit({}) {
     const idUserInfor = useSelector((state) => state.allEvents.userInfor);
     const dispatch = useDispatch();
     const profile = JSON.parse(localStorage.getItem('profile'));
-    console.log(profile);
 
     const [loading, setLoading] = useState(false);
     const [userName, setUserName] = useState(profile.userName);
@@ -77,7 +76,7 @@ function ProfileEdit({}) {
         }
 
         axios
-            .patch(`http://localhost:8080/user/${idUserInfor}`, {
+            .patch(`http://localhost:8080/user/all/${idUserInfor}`, {
                 userName,
                 email,
                 password,
@@ -188,7 +187,7 @@ function ProfileEdit({}) {
                         CMND/CCCD:
                     </label>
                     <input
-                        type="text"
+                        type="number"
                         className={cx('form-control', '', 'p-2', 'lg:w-4/5', 'w-3/5')}
                         name="IdentifyCard"
                         value={identifyCard}

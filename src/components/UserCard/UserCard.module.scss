@@ -1,4 +1,4 @@
-.event-card {
+.user-card {
     border: 1px solid #333;
     border-radius: 30px;
     background-color: #e4e9ff;
@@ -21,21 +21,4 @@
 .disable {
     background-color: gray;
     color: rgb(70, 69, 69) !important;
-}
-.move-animation {
-    position: relative;
-    animation-name: move-icon;
-    animation-duration: 2s;
-    animation-iteration-count: infinite;
-}
-@keyframes move-icon {
-    0% {
-        left: 0;
-    }
-    50% {
-        left: 8px;
-    }
-    100% {
-        left: 0;
-    }
 }

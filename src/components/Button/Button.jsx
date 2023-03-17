@@ -13,12 +13,14 @@ function Button({
     stroke = false,
     redBtn = false,
     blackBtn = false,
+    greenBtn = false,
 }) {
     const classes = cx('Button', {
         outline,
         stroke,
         redBtn,
         blackBtn,
+        greenBtn,
         [className]: className,
     });
 

@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import styles from './EventCard.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendarCheck, faPenToSquare, faTrashCan } from '@fortawesome/free-regular-svg-icons';
+import { faCalendarCheck, faHandPointRight, faPenToSquare, faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import Button from '../Button';
 import { useDispatch, useSelector } from 'react-redux';
-import { addAndEditParticipant, editEvent, editParticipant } from '~/redux/actions/eventAction';
+import { addAndEditParticipant, editEvent, editParticipant, addParticipant } from '~/redux/actions/eventAction';
 import axios from 'axios';
 import { faToolbox, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { logDOM } from '@testing-library/react';
 
 const cx = classNames.bind(styles);
 
@@ -19,6 +21,8 @@ function EventCard({ data, className, onClick = false, onDoubleClick = false, di
 
     const [datetime, setDatetime] = useState(getCurrentDateTime());
     const [isDisable, setIsDisable] = useState(false);
+    const [participants, setParticipants] = useState(data.participants.map((participant) => participant._id));
+    const profile = JSON.parse(localStorage.getItem('profile'));
 
     function getCurrentDateTime() {
         const now = new Date();
@@ -54,6 +58,24 @@ function EventCard({ data, className, onClick = false, onDoubleClick = false, di
                 alert('Xóa sự kiện thất bại:', error);
             });
     };
+
+    const handleJoin = async () => {
+        await axios
+            .patch(`http://localhost:8080/event/${data._id}`, {
+                participants: [...participants, profile._id],
+            })
+            .then((response) => {
+                alert('Tham gia thành công : ' + data.title);
+                window.location.reload();
+            })
+            .catch((error) => {
+                alert('Tham gia thất bại :' + data.title);
+
+                console.log(error);
+            });
+    };
+
+    const { pathname } = useLocation();
 
     return (
         <div
@@ -118,38 +140,61 @@ function EventCard({ data, className, onClick = false, onDoubleClick = false, di
                 </div>
             </div>
             <div className={cx('btn-event', 'flex')}>
-                <Button
-                    onClick={() => {
-                        dispatch(editEvent(data._id));
-                        dispatch(
-                            editParticipant(
-                                data.participants.map((participant) => {
-                                    return { label: participant.email, value: participant._id };
-                                }),
-                            ),
-                        );
-                        dispatch(
-                            addAndEditParticipant(
-                                data.participants.map((participant) => {
-                                    return { label: participant.email, value: participant._id };
-                                }),
-                            ),
-                        );
-                    }}
-                    className={cx('lg:w-1/5', 'w-2/6')}
-                    blackBtn
-                >
-                    <FontAwesomeIcon icon={faToolbox} className={cx('edit-icon', 'mr-1')} /> Edit
-                </Button>
-                <Button
-                    onClick={() => {
-                        handleDeleteEvent(data._id);
-                    }}
-                    className={cx('lg:w-1/5', 'w-2/6', 'ml-1')}
-                    redBtn
-                >
-                    <FontAwesomeIcon icon={faTrashCan} className={cx('delete-icon', 'mr-1')} /> Delete
-                </Button>
+                {pathname === '/board-events' && (
+                    <>
+                        <Button
+                            onClick={() => {
+                                dispatch(editEvent(data._id));
+                                dispatch(
+                                    editParticipant(
+                                        data.participants.map((participant) => {
+                                            return { label: participant.email, value: participant._id };
+                                        }),
+                                    ),
+                                );
+                                dispatch(
+                                    addAndEditParticipant(
+                                        data.participants.map((participant) => {
+                                            return { label: participant.email, value: participant._id };
+                                        }),
+                                    ),
+                                );
+                            }}
+                            className={cx('lg:w-1/5', 'w-2/6')}
+                            blackBtn
+                        >
+                            <FontAwesomeIcon icon={faToolbox} className={cx('edit-icon', 'mr-1')} /> Edit
+                        </Button>
+                        <Button
+                            onClick={() => {
+                                handleDeleteEvent(data._id);
+                            }}
+                            className={cx('lg:w-1/5', 'w-2/6', 'ml-1')}
+                            redBtn
+                        >
+                            <FontAwesomeIcon icon={faTrashCan} className={cx('delete-icon', 'mr-1')} /> Delete
+                        </Button>
+                    </>
+                )}
+
+                {pathname === '/home' && (
+                    <>
+                        {' '}
+                        <Button
+                            onClick={() => {
+                                handleJoin();
+                            }}
+                            greenBtn
+                            className={cx('md:w-1/5', 'ml-auto', 'mr-auto')}
+                        >
+                            <FontAwesomeIcon
+                                icon={faHandPointRight}
+                                className={cx('delete-icon', 'mr-1', 'move-animation', 'mr-3')}
+                            />{' '}
+                            <span className={cx('text', 'mx-3')}>Tham gia</span>
+                        </Button>
+                    </>
+                )}
             </div>
         </div>
     );

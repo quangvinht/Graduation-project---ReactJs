@@ -4,6 +4,9 @@ const initalState = {
     userInfor: [],
     idUpdateEvent: '',
     isUpdateEvent: false,
+    idUpdateUser: '',
+    isUpdateUser: false,
+
     participants: [],
     editParticipants: [],
     addAndEditParticipants: [],
@@ -28,6 +31,13 @@ export const userReducer = (state = initalState, { type, payload }) => {
                 ...state,
                 idUpdateEvent: payload,
                 isUpdateEvent: true,
+            };
+
+        case actionType.EDIT_USER:
+            return {
+                ...state,
+                idUpdateUser: payload,
+                isUpdateUser: true,
             };
 
         case actionType.ADD_PARTICIPANT:

@@ -1,56 +1,22 @@
-import { useEffect, useState, memo } from 'react';
+import React, { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
-import styles from './Home.module.scss';
+import styles from './EventList.module.scss';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import EventCard from '~/components/EventCard';
 import Button from '~/components/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-
 import axios from 'axios';
-import { getUserInfor } from '~/redux/actions/eventAction';
-
-import { useDispatch, useSelector } from 'react-redux';
 
 const cx = classNames.bind(styles);
 
-const Home = () => {
+function EventList({}) {
+    const [searchValue, setSearchValue] = useState('');
     const [dataEvent, setDataEvent] = useState([]);
     const [pageNumber, setPageNumber] = useState(1);
     const [loading, setLoading] = useState(false);
     const [totalEvents, setTotalEvents] = useState(0);
-    const [searchValue, setSearchValue] = useState('');
-    const eventPerPage = 6;
-
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        setLoading(true);
-
-        const getAPIIdUser = async () => {
-            await axios
-                .get('http://localhost:8080/profile', {
-                    headers: {
-                        Authorization: `Bearer ${JSON.parse(localStorage.getItem('user'))}`,
-                    },
-                })
-                .then((response) => {
-                    dispatch(getUserInfor(response.data.sub));
-                    // axios({
-                    //     method: 'get',
-                    //     url: `http://localhost:8080/user/${response.data.sub}`,
-                    // }).then(function (response) {
-                    //     dispatch(getUserInfor(response.data));
-                    // });
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-            setLoading(false);
-        };
-
-        getAPIIdUser();
-    }, []);
+    const eventPerPage = 3;
 
     //call API:
     useEffect(() => {
@@ -125,8 +91,8 @@ const Home = () => {
     };
 
     return (
-        <div className={cx('home', 'flex', 'flex-col', 'items-center')}>
-            <div className={cx('event-board', 'w-11/12', '')}>
+        <div className={cx('board', 'flex-1', 'flex', 'flex-col', '', '', 'md:w-full')}>
+            <div className={cx('event-board')}>
                 <h4 className={cx('event-list-tag')}>Danh sách sự kiện:</h4>
 
                 <div className={cx('search-field', 'flex', 'items-center', '')}>
@@ -152,12 +118,7 @@ const Home = () => {
                                                 {...provided.dragHandleProps}
                                                 ref={provided.innerRef}
                                             >
-                                                <EventCard
-                                                    id={event._id}
-                                                    key={event._id}
-                                                    data={event}
-                                                    className={cx('')}
-                                                />
+                                                <EventCard id={event._id} key={event._id} data={event} />
                                             </div>
                                         )}
                                     </Draggable>
@@ -169,7 +130,7 @@ const Home = () => {
                 </DragDropContext>
             </div>
 
-            <div className={cx('pagination', 'flex', 'self-center', '')}>
+            <div className={cx('pagination', 'flex', 'self-center', 'lg:self-end')}>
                 <Button
                     className={cx(
                         'mr-2',
@@ -196,6 +157,7 @@ const Home = () => {
             </div>
         </div>
     );
-};
+}
 
-export default memo(Home);
+EventList.propTypes = {};
+export default React.memo(EventList);

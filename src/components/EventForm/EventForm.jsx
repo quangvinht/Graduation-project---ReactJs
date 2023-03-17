@@ -184,13 +184,6 @@ function EventForm({ data, className, onClick = false, onDoubleClick = false, di
                         onChange={(e) => setStartDate(e.target.value)}
                     />
                 </div>
-                <div className={cx('form-group', 'flex', 'flex-col', 'gap-1')}>
-                    <label htmlFor="type" className={cx('')}>
-                        Thành viên:
-                    </label>
-
-                    <UserSuggest isUpdated={isUpdate} />
-                </div>
 
                 <div className={cx('form-group', 'flex', 'flex-col', 'gap-1')}>
                     <label htmlFor="endDate" className={cx('')}>
@@ -205,6 +198,13 @@ function EventForm({ data, className, onClick = false, onDoubleClick = false, di
                         min={startDate}
                         onChange={(e) => setEndDate(e.target.value)}
                     />
+                </div>
+                <div className={cx('form-group', 'flex', 'flex-col', 'gap-1')}>
+                    <label htmlFor="type" className={cx('')}>
+                        Thành viên:
+                    </label>
+
+                    <UserSuggest isUpdated={isUpdate} />
                 </div>
                 <div className={cx('form-group', 'flex', 'flex-col', 'gap-1')}>
                     <label htmlFor="type" className={cx('')}>

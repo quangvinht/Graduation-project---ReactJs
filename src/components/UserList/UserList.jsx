@@ -1,71 +1,37 @@
-import { useEffect, useState, memo } from 'react';
+import React, { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
-import styles from './Home.module.scss';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import EventCard from '~/components/EventCard';
-import Button from '~/components/Button';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faArrowRight, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-
+import styles from './UserList.module.scss';
 import axios from 'axios';
-import { getUserInfor } from '~/redux/actions/eventAction';
-
-import { useDispatch, useSelector } from 'react-redux';
+import UserCard from '../UserCard';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Button from '~/components/Button';
+import { faArrowLeft, faArrowRight, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 const cx = classNames.bind(styles);
 
-const Home = () => {
-    const [dataEvent, setDataEvent] = useState([]);
+function UserList({}) {
+    const [searchValue, setSearchValue] = useState('');
+    const [dataUser, setDataUser] = useState([]);
     const [pageNumber, setPageNumber] = useState(1);
     const [loading, setLoading] = useState(false);
-    const [totalEvents, setTotalEvents] = useState(0);
-    const [searchValue, setSearchValue] = useState('');
-    const eventPerPage = 6;
-
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        setLoading(true);
-
-        const getAPIIdUser = async () => {
-            await axios
-                .get('http://localhost:8080/profile', {
-                    headers: {
-                        Authorization: `Bearer ${JSON.parse(localStorage.getItem('user'))}`,
-                    },
-                })
-                .then((response) => {
-                    dispatch(getUserInfor(response.data.sub));
-                    // axios({
-                    //     method: 'get',
-                    //     url: `http://localhost:8080/user/${response.data.sub}`,
-                    // }).then(function (response) {
-                    //     dispatch(getUserInfor(response.data));
-                    // });
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-            setLoading(false);
-        };
-
-        getAPIIdUser();
-    }, []);
+    const [totalUsers, setTotalUsers] = useState(0);
+    const userPerPage = 3;
 
     //call API:
     useEffect(() => {
         setLoading(true);
 
-        const getAPIEvent = async () => {
+        const getAPIUser = async () => {
             if (searchValue.length === 0) {
                 await axios
                     .get(
-                        `http://localhost:8080/event?page=${pageNumber === 0 ? 1 : pageNumber}&limit=${eventPerPage}`,
+                        `http://localhost:8080/user?page=${pageNumber === 0 ? 1 : pageNumber}&limit=${userPerPage}`,
                         {},
                     )
                     .then((response) => {
-                        setDataEvent(response.data.data);
-                        setTotalEvents(response.data.total);
+                        setDataUser(response.data.data);
+                        setTotalUsers(response.data.total);
                     })
                     .catch((error) => {
                         console.log(error);
@@ -73,14 +39,14 @@ const Home = () => {
             } else {
                 await axios
                     .get(
-                        `http://localhost:8080/event/search/${searchValue}?page=${
+                        `http://localhost:8080/user/search/${searchValue}?page=${
                             pageNumber === 0 ? 1 : pageNumber
-                        }&limit=${eventPerPage}`,
+                        }&limit=${userPerPage}`,
                         {},
                     )
                     .then((response) => {
-                        setDataEvent(response.data.data);
-                        setTotalEvents(response.data.total);
+                        setDataUser(response.data.data);
+                        setTotalUsers(response.data.total);
                     })
                     .catch((error) => {
                         console.log(error);
@@ -90,7 +56,7 @@ const Home = () => {
             setLoading(false);
         };
 
-        getAPIEvent();
+        getAPIUser();
     }, [pageNumber, searchValue]);
 
     // dragable event:
@@ -100,17 +66,17 @@ const Home = () => {
             return;
         }
 
-        const newItems = Array.from(dataEvent);
+        const newItems = Array.from(dataUser);
         const [removed] = newItems.splice(result.source.index, 1);
         newItems.splice(result.destination.index, 0, removed);
 
-        setDataEvent(newItems);
+        setDataUser(newItems);
     }
 
     //handle pagination button:
     const handleNextPage = () => {
-        if (pageNumber >= Math.ceil(totalEvents / eventPerPage)) {
-            setPageNumber(Math.ceil(totalEvents / eventPerPage) - 1);
+        if (pageNumber >= Math.ceil(totalUsers / userPerPage)) {
+            setPageNumber(Math.ceil(totalUsers / userPerPage) - 1);
         }
         setPageNumber((prevValue) => prevValue + 1);
     };
@@ -125,9 +91,9 @@ const Home = () => {
     };
 
     return (
-        <div className={cx('home', 'flex', 'flex-col', 'items-center')}>
-            <div className={cx('event-board', 'w-11/12', '')}>
-                <h4 className={cx('event-list-tag')}>Danh sách sự kiện:</h4>
+        <div className={cx('board', '', 'flex', 'flex-col', '', '', 'md:w-1/2', 'md:ml-3')}>
+            <div className={cx('user-board')}>
+                <h4 className={cx('user-list-tag')}>Danh sách thành viên:</h4>
 
                 <div className={cx('search-field', 'flex', 'items-center', '')}>
                     <input
@@ -141,23 +107,18 @@ const Home = () => {
                 </div>
 
                 <DragDropContext onDragEnd={onDragEnd}>
-                    <Droppable droppableId={dataEvent}>
+                    <Droppable droppableId={dataUser}>
                         {(provided) => (
                             <div {...provided.droppableProps} ref={provided.innerRef}>
-                                {dataEvent.map((event, index) => (
-                                    <Draggable key={event._id} draggableId={event._id} index={index}>
+                                {dataUser.map((user, index) => (
+                                    <Draggable key={user._id} draggableId={user._id} index={index}>
                                         {(provided) => (
                                             <div
                                                 {...provided.draggableProps}
                                                 {...provided.dragHandleProps}
                                                 ref={provided.innerRef}
                                             >
-                                                <EventCard
-                                                    id={event._id}
-                                                    key={event._id}
-                                                    data={event}
-                                                    className={cx('')}
-                                                />
+                                                <UserCard id={user._id} key={user._id} data={user} />
                                             </div>
                                         )}
                                     </Draggable>
@@ -168,8 +129,7 @@ const Home = () => {
                     </Droppable>
                 </DragDropContext>
             </div>
-
-            <div className={cx('pagination', 'flex', 'self-center', '')}>
+            <div className={cx('pagination', 'flex', 'self-center', 'lg:self-end')}>
                 <Button
                     className={cx(
                         'mr-2',
@@ -186,8 +146,8 @@ const Home = () => {
                     className={cx(
                         'w-1/2',
                         'bg-blue-700',
-                        `${pageNumber === Math.ceil(totalEvents / eventPerPage) && 'bg-gray-400'}`,
-                        `${pageNumber === Math.ceil(totalEvents / eventPerPage) && 'hover:bg-gray-400'}`,
+                        `${pageNumber === Math.ceil(totalUsers / userPerPage) && 'bg-gray-400'}`,
+                        `${pageNumber === Math.ceil(totalUsers / userPerPage) && 'hover:bg-gray-400'}`,
                     )}
                     onClick={handleNextPage}
                 >
@@ -196,6 +156,7 @@ const Home = () => {
             </div>
         </div>
     );
-};
+}
 
-export default memo(Home);
+UserList.propTypes = {};
+export default React.memo(UserList);

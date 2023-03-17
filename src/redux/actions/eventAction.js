@@ -13,6 +13,13 @@ export const editEvent = (data) => {
     };
 };
 
+export const editUser = (data) => {
+    return {
+        type: actionType.EDIT_USER,
+        payload: data,
+    };
+};
+
 export const addParticipant = (data) => {
     return {
         type: actionType.ADD_PARTICIPANT,
