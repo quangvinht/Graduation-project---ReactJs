@@ -9,6 +9,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import Modal from 'react-modal';
 import ModalContent from '../ModalContent';
+import { CSVLink, CSVDownload } from 'react-csv';
+
+import { faFileExport } from '@fortawesome/free-solid-svg-icons';
+import Button from '../Button';
 
 const customStyles = {
     overlay: {
@@ -37,7 +41,7 @@ const customStyles = {
 
 const cx = classNames.bind(styles);
 
-function UserSuggest({ isUpdated }) {
+function UserSuggest({ isUpdated, csvData }) {
     const participants = useSelector((state) => state.allEvents.participants);
     const editParticipants = useSelector((state) => state.allEvents.editParticipants);
     const [selectedOption, setSelectedOption] = useState([]);
@@ -159,6 +163,26 @@ function UserSuggest({ isUpdated }) {
                         </div>
                     </div>
                 )}
+
+                {csvData.length > 0 && (
+                    <CSVLink className={cx('csv')} data={csvData} filename={'danh_sách_thành_viên.csv'}>
+                        <div
+                            className={cx(
+                                'btn-csv',
+                                'px-2',
+                                'py-1',
+                                'rounded-xl',
+                                'w-1/3',
+                                'text-base',
+                                'text-center',
+                                'my-2',
+                            )}
+                        >
+                            <FontAwesomeIcon icon={faFileExport} /> xuất file
+                        </div>
+                    </CSVLink>
+                )}
+
                 <Modal
                     isOpen={modalIsOpen}
                     onRequestClose={() => dispatch(setModalIsOpen(false))}

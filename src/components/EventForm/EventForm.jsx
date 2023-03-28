@@ -219,7 +219,7 @@ function EventForm({ data, className, onClick = false, onDoubleClick = false, di
                         Thành viên:
                     </label>
 
-                    <UserSuggest isUpdated={isUpdate} />
+                    <UserSuggest csvData={csvData} isUpdated={isUpdate} />
                 </div>
                 <div className={cx('form-group', 'flex', 'flex-col', 'gap-1')}>
                     <label htmlFor="type" className={cx('')}>
@@ -247,14 +247,6 @@ function EventForm({ data, className, onClick = false, onDoubleClick = false, di
                     <Button className={cx('lg:w-1/2', 'w-1/2', 'md:w-3/5', 'self-center')}>
                         {isUpdate ? 'Chỉnh sửa ' : 'Thêm'}
                     </Button>
-
-                    <div>
-                        {csvData.length > 0 && (
-                            <CSVLink className={cx('csv')} data={csvData} filename={'danh_sách_thành_viên.csv'}>
-                                <FontAwesomeIcon icon={faFileExport} />
-                            </CSVLink>
-                        )}
-                    </div>
                 </div>
             </form>
         </div>
