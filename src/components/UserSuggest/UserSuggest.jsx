@@ -171,14 +171,17 @@ function UserSuggest({ isUpdated, csvData }) {
                                 'btn-csv',
                                 'px-2',
                                 'py-1',
-                                'rounded-xl',
+
                                 'w-1/3',
                                 'text-base',
                                 'text-center',
                                 'my-2',
                             )}
                         >
-                            <FontAwesomeIcon icon={faFileExport} /> xuất file
+                            <span>
+                                <FontAwesomeIcon icon={faFileExport} className={cx('mr-1')} />
+                                xuất file
+                            </span>
                         </div>
                     </CSVLink>
                 )}

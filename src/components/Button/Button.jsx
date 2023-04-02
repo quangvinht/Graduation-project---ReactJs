@@ -25,13 +25,21 @@ function Button({
     });
 
     return (
+        // <button
+        //     onClick={() => {
+        //         onClick && onClick();
+        //     }}
+        //     className={cx(classes, 'text-base', 'text-center')}
+        // >
+        //     {children}
+        // </button>
         <button
             onClick={() => {
                 onClick && onClick();
             }}
-            className={cx(classes, 'text-base', 'text-center')}
+            className={cx(classes, 'text-base', 'text-center', 'wrapper')}
         >
-            {children}
+            <span>{children}</span>
         </button>
     );
 }

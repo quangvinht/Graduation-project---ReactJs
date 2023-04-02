@@ -58,8 +58,6 @@ function EventForm({ data, className, onClick = false, onDoubleClick = false, di
 
     // const participantUpdate = [...participants, ...editParticipants];
 
-    const dispatch = useDispatch();
-
     useEffect(() => {
         setLoading(true);
 
@@ -89,7 +87,8 @@ function EventForm({ data, className, onClick = false, onDoubleClick = false, di
         };
 
         getAPIEvent();
-    }, [idUpdate]);
+    }, [idUpdate, isUpdate]);
+    console.log(idUpdate);
 
     const handleEventForm = (e) => {
         e.preventDefault();

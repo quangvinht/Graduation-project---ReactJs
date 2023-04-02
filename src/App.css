@@ -32,3 +32,6 @@ input[type='number']::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
+.select__menu {
+    z-index: 10 !important;
+}
