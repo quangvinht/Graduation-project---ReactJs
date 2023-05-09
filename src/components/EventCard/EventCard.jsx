@@ -49,7 +49,7 @@ function EventCard({ data, className, onClick = false, onDoubleClick = false, di
 
     const handleDeleteEvent = (id) => {
         axios
-            .delete(`http://localhost:8080/event/${id}`)
+            .delete(`http://localhost:8080/event/all/${id}`)
             .then((response) => {
                 alert('Xóa sự kiện thành công:', data.title);
                 window.location.reload();
@@ -60,12 +60,15 @@ function EventCard({ data, className, onClick = false, onDoubleClick = false, di
     };
 
     const handleJoin = async () => {
+        //add participant:
+
         await axios
-            .patch(`http://localhost:8080/event/${data._id}`, {
+            .patch(`http://localhost:8080/event/all/${data._id}`, {
                 participants: [...participants, profile._id],
             })
             .then((response) => {
                 alert('Tham gia thành công : ' + data.title);
+
                 window.location.reload();
             })
             .catch((error) => {
@@ -73,6 +76,21 @@ function EventCard({ data, className, onClick = false, onDoubleClick = false, di
 
                 console.log(error);
             });
+        // add eventJoined:
+
+        // await axios
+        //     .get(`http://localhost:8080/user/all/${profile._id}`)
+        //     .then((response) => {
+        //         axios
+        //             .patch(`http://localhost:8080/user/all/${response.data._id}`, {
+        //                 eventsJoined: [...response.data.eventsJoined, data._id],
+        //             })
+        //             .then((response) => {
+        //                 console.log(response);
+        //             })
+        //             .catch((error) => {});
+        //     })
+        //     .catch((error) => {});
     };
 
     const { pathname } = useLocation();
@@ -181,6 +199,7 @@ function EventCard({ data, className, onClick = false, onDoubleClick = false, di
                     <>
                         {' '}
                         <Button
+                            disabled={disabled}
                             onClick={() => {
                                 handleJoin();
                             }}
@@ -191,7 +210,7 @@ function EventCard({ data, className, onClick = false, onDoubleClick = false, di
                                 icon={faHandPointRight}
                                 className={cx('delete-icon', 'mr-1', 'move-animation', 'mr-3')}
                             />{' '}
-                            <span className={cx('text', 'mx-3')}>Tham gia</span>
+                            <span className={cx('text', 'mx-3')}>{disabled ? 'Đã tham gia' : 'Tham gia ngay'}</span>
                         </Button>
                     </>
                 )}

@@ -15,6 +15,7 @@ function ModalContent({ data }) {
 
     const [value, setValue] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [events, setEvents] = useState([]);
 
     useEffect(() => {
         setLoading(true);
@@ -29,9 +30,19 @@ function ModalContent({ data }) {
                 });
             setLoading(false);
         };
+        const getAllEvent = async () => {
+            await axios
+                .get(`http://localhost:8080/event/all`)
+                .then((response) => {
+                    setEvents(response.data.filter((event) => event.participants.includes(data)));
+                })
+                .catch((error) => {});
+        };
 
         getAPIEvent();
+        getAllEvent();
     }, []);
+    console.log(events);
 
     return (
         <div className={cx('Modal-Content', 'flex', 'flex-col', 'items-center', 'p-6', 'relative', 'text-xl')}>
@@ -70,6 +81,24 @@ function ModalContent({ data }) {
                     {value.createdAt ? value.createdAt.slice(0, 10) : 'đang cập nhập'}
                 </span>
             </div>
+            {/* <div className={cx('field', 'flex', 'self-start', 'mt-4')}>
+                <h4 className={cx('label', 'mr-2')}> Các sự kiện tham gia:</h4>
+
+                <ul lassName={cx('truncate ...')}>
+                    {events.map((event) => (
+                        <li className={cx('truncate ...')}>.{event.title}</li>
+                    ))}
+                </ul>
+            </div> */}
+            <div className={cx('field', 'flex', 'self-start', 'mt-4')}>
+                <h4>Các sự kiện tham gia:</h4>
+            </div>
+            <div className={cx('field', 'flex', 'mt-4', 'text-xs', 'self-start', 'flex-col')}>
+                {events.map((event) => (
+                    <div className="text-ellipsis overflow-hidden ...">.{event.title.slice(0, 30)}...</div>
+                ))}
+            </div>
+
             <div className={cx('bar')}></div>
         </div>
     );

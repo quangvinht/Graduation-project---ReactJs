@@ -15,14 +15,30 @@ import { useDispatch, useSelector } from 'react-redux';
 const cx = classNames.bind(styles);
 
 const Home = () => {
+    const profile = JSON.parse(localStorage.getItem('profile'));
     const [dataEvent, setDataEvent] = useState([]);
     const [pageNumber, setPageNumber] = useState(1);
     const [loading, setLoading] = useState(false);
     const [totalEvents, setTotalEvents] = useState(0);
     const [searchValue, setSearchValue] = useState('');
+    const [eventJoined, setEventJoined] = useState([]);
     const eventPerPage = 6;
 
     const dispatch = useDispatch();
+    useEffect(() => {
+        setLoading(true);
+
+        const getAllEvent = async () => {
+            await axios
+                .get(`http://localhost:8080/event/all`)
+                .then((response) => {
+                    setEventJoined(response.data.filter((event) => event.participants.includes(profile._id)));
+                })
+                .catch((error) => {});
+        };
+        getAllEvent();
+        setLoading(false);
+    }, []);
 
     useEffect(() => {
         setLoading(true);
@@ -153,6 +169,11 @@ const Home = () => {
                                                 ref={provided.innerRef}
                                             >
                                                 <EventCard
+                                                    disabled={
+                                                        eventJoined.map((event) => event._id).includes(event._id)
+                                                            ? true
+                                                            : false
+                                                    }
                                                     id={event._id}
                                                     key={event._id}
                                                     data={event}

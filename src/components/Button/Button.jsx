@@ -7,7 +7,7 @@ const cx = classNames.bind(styles);
 function Button({
     children,
     className,
-
+    disabled = false,
     outline = false,
     onClick = false,
     stroke = false,
@@ -21,6 +21,7 @@ function Button({
         redBtn,
         blackBtn,
         greenBtn,
+        disabled,
         [className]: className,
     });
 
@@ -34,6 +35,7 @@ function Button({
         //     {children}
         // </button>
         <button
+            disabled={disabled}
             onClick={() => {
                 onClick && onClick();
             }}

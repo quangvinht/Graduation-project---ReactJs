@@ -110,7 +110,7 @@ const Login = () => {
             >
                 <div className={cx('self-center', 'wrapper', 'lg:text-xl', 'md:text-xs', 'text-sm')}>
                     <h1 className={cx('playful')} aria-label="Wash your hands">
-                        <span aria-hidden="true">x</span>
+                        <span aria-hidden="true">X</span>
                         <span aria-hidden="true">I</span>
                         <span aria-hidden="true">N</span>
                         <span aria-hidden="true"> </span>
