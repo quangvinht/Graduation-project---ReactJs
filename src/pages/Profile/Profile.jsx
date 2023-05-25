@@ -58,7 +58,7 @@ const Profile = () => {
         <>
             {!loading && (
                 <div className={cx('profile', 'flex', 'flex-col', 'items-center', 'w-full', 'gap-3', 'mb-5')}>
-                    <h2 className={cx('title', '')}>Thông tin người dùng</h2>
+                    <h2 className={cx('title', 'text-center')}>Thông tin người dùng</h2>
 
                     <div
                         className={cx(
@@ -199,7 +199,7 @@ const Profile = () => {
                             'w-full',
                         )}
                     >
-                        <h5 className={cx('lable', 'word-break', 'md:w-1/5')}>Các sự kiện tham gia:</h5>
+                        <h5 className={cx('lable', 'word-break', 'md:w-1/5', 'w-1/6')}>Các sự kiện tham gia:</h5>
                         <span className={cx('infor', 'py-3', 'px-4', '', 'md:w-4/5', 'w-2/3', 'break-words')}>
                             <ul>
                                 {events.map((event) => (
