@@ -63,7 +63,7 @@ function EventForm({ data, className, onClick = false, onDoubleClick = false, di
 
         const getAPIEvent = async () => {
             await axios
-                .get(`http://localhost:8080/event/all/${idUpdate}`, {})
+                .get(`${process.env.REACT_APP_BASE_URL_API}event/all/${idUpdate}`, {})
                 .then((response) => {
                     if (isUpdate) {
                         setTitle(response.data.title);
@@ -97,7 +97,7 @@ function EventForm({ data, className, onClick = false, onDoubleClick = false, di
 
             if (participants.length > 0) {
                 axios
-                    .patch(`http://localhost:8080/event/all/${idUpdate}`, {
+                    .patch(`${process.env.REACT_APP_BASE_URL_API}event/all/${idUpdate}`, {
                         title,
                         description,
                         startDate,
@@ -116,7 +116,7 @@ function EventForm({ data, className, onClick = false, onDoubleClick = false, di
                     });
             } else {
                 axios
-                    .patch(`http://localhost:8080/event/all/${idUpdate}`, {
+                    .patch(`${process.env.REACT_APP_BASE_URL_API}event/all/${idUpdate}`, {
                         title,
                         description,
                         startDate,
@@ -136,7 +136,14 @@ function EventForm({ data, className, onClick = false, onDoubleClick = false, di
             }
         } else {
             axios
-                .post('http://localhost:8080/event', { title, description, startDate, endDate, type, participants })
+                .post(`${process.env.REACT_APP_BASE_URL_API}event`, {
+                    title,
+                    description,
+                    startDate,
+                    endDate,
+                    type,
+                    participants,
+                })
                 .then((response) => {
                     alert('Thêm thành công: ' + title);
                     window.location.reload();

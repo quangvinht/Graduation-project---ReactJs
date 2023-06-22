@@ -30,7 +30,7 @@ const Home = () => {
 
         const getAllEvent = async () => {
             await axios
-                .get(`http://localhost:8080/event/all`)
+                .get(`${process.env.REACT_APP_BASE_URL_API}event/all`)
                 .then((response) => {
                     setEventJoined(response.data.filter((event) => event.participants.includes(profile._id)));
                 })
@@ -45,7 +45,7 @@ const Home = () => {
 
         const getAPIIdUser = async () => {
             await axios
-                .get('http://localhost:8080/profile', {
+                .get(`${process.env.REACT_APP_BASE_URL_API}profile`, {
                     headers: {
                         Authorization: `Bearer ${JSON.parse(localStorage.getItem('user'))}`,
                     },
@@ -54,7 +54,7 @@ const Home = () => {
                     dispatch(getUserInfor(response.data.sub));
                     // axios({
                     //     method: 'get',
-                    //     url: `http://localhost:8080/user/${response.data.sub}`,
+                    //     url: `${process.env.REACT_APP_BASE_URL_API}user/${response.data.sub}`,
                     // }).then(function (response) {
                     //     dispatch(getUserInfor(response.data));
                     // });
@@ -76,7 +76,9 @@ const Home = () => {
             if (searchValue.length === 0) {
                 await axios
                     .get(
-                        `http://localhost:8080/event?page=${pageNumber === 0 ? 1 : pageNumber}&limit=${eventPerPage}`,
+                        `${process.env.REACT_APP_BASE_URL_API}event?page=${
+                            pageNumber === 0 ? 1 : pageNumber
+                        }&limit=${eventPerPage}`,
                         {},
                     )
                     .then((response) => {
@@ -89,7 +91,7 @@ const Home = () => {
             } else {
                 await axios
                     .get(
-                        `http://localhost:8080/event/search/${searchValue}?page=${
+                        `${process.env.REACT_APP_BASE_URL_API}event/search/${searchValue}?page=${
                             pageNumber === 0 ? 1 : pageNumber
                         }&limit=${eventPerPage}`,
                         {},

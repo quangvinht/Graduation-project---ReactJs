@@ -21,7 +21,7 @@ function ModalContent({ data }) {
         setLoading(true);
         const getAPIEvent = async () => {
             await axios
-                .get(`http://localhost:8080/user/all/${data}`)
+                .get(`${process.env.REACT_APP_BASE_URL_API}user/all/${data}`)
                 .then((response) => {
                     setValue(response.data);
                 })
@@ -32,7 +32,7 @@ function ModalContent({ data }) {
         };
         const getAllEvent = async () => {
             await axios
-                .get(`http://localhost:8080/event/all`)
+                .get(`${process.env.REACT_APP_BASE_URL_API}event/all`)
                 .then((response) => {
                     setEvents(response.data.filter((event) => event.participants.includes(data)));
                 })

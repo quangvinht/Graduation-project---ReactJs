@@ -29,7 +29,7 @@ function UserForm({}) {
 
         const getAPIEvent = async () => {
             await axios
-                .get(`http://localhost:8080/user/all/${idUpdate}`, {})
+                .get(`${process.env.REACT_APP_BASE_URL_API}user/all/${idUpdate}`, {})
                 .then((response) => {
                     if (isUpdate) {
                         setUserName(response.data.userName);
@@ -83,7 +83,7 @@ function UserForm({}) {
         }
         if (isUpdate) {
             axios
-                .patch(`http://localhost:8080/user/all/${idUpdate}`, {
+                .patch(`${process.env.REACT_APP_BASE_URL_API}user/all/${idUpdate}`, {
                     userName,
                     email,
                     password,
@@ -103,7 +103,14 @@ function UserForm({}) {
                 });
         } else {
             axios
-                .post('http://localhost:8080/user', { userName, email, password, identifyCard, birthDate, phoneNumber })
+                .post(`${process.env.REACT_APP_BASE_URL_API}user`, {
+                    userName,
+                    email,
+                    password,
+                    identifyCard,
+                    birthDate,
+                    phoneNumber,
+                })
                 .then((response) => {
                     alert('Thêm thành công: ' + email);
                     window.location.reload();

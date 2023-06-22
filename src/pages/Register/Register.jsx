@@ -156,7 +156,7 @@ const Register = () => {
 
         const createUser = async (email, password) => {
             try {
-                const response = await axios.post('http://localhost:8080/user', {
+                const response = await axios.post(`http://localhost:8080/user`, {
                     email,
                     password,
                 });

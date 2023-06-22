@@ -3,7 +3,7 @@ import axios from 'axios';
 const userService = {
     getID: async () => {
         await axios
-            .get('http://localhost:8080/profile', {
+            .get('${process.env.REACT_APP_BASE_URL_API}profile', {
                 headers: {
                     Authorization: `Bearer ${JSON.parse(localStorage.getItem('user'))}`,
                 },
@@ -18,7 +18,7 @@ const userService = {
     getUserInformations: (id) => {
         axios({
             method: 'get',
-            url: `http://localhost:8080/user/${id}`,
+            url: `${process.env.REACT_APP_BASE_URL_API}user/${id}`,
         }).then(function (response) {
             return response.data;
         });

@@ -44,7 +44,7 @@ const Profile = () => {
 
         const getAllEvent = async () => {
             await axios
-                .get(`http://localhost:8080/event/all`)
+                .get(`${process.env.REACT_APP_BASE_URL_API}event/all`)
                 .then((response) => {
                     setEvents(response.data.filter((event) => event.participants.includes(profile._id)));
                 })

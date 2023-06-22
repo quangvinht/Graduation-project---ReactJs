@@ -4,7 +4,7 @@ import httpRequest from '~/utils/httpRequest';
 import axios from 'axios';
 const login = (email, password) => {
     return axios
-        .post('http://localhost:8080/auth/login', { email, password })
+        .post('${process.env.REACT_APP_BASE_URL_API}auth/login', { email, password })
         .then((response) => {
             if (response.data.accessToken) {
                 localStorage.setItem('user', JSON.stringify(response.data));

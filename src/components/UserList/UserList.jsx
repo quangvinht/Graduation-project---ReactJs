@@ -26,7 +26,9 @@ function UserList({}) {
             if (searchValue.length === 0) {
                 await axios
                     .get(
-                        `http://localhost:8080/user?page=${pageNumber === 0 ? 1 : pageNumber}&limit=${userPerPage}`,
+                        `${process.env.REACT_APP_BASE_URL_API}user?page=${
+                            pageNumber === 0 ? 1 : pageNumber
+                        }&limit=${userPerPage}`,
                         {},
                     )
                     .then((response) => {
@@ -39,7 +41,7 @@ function UserList({}) {
             } else {
                 await axios
                     .get(
-                        `http://localhost:8080/user/search/${searchValue}?page=${
+                        `${process.env.REACT_APP_BASE_URL_API}user/search/${searchValue}?page=${
                             pageNumber === 0 ? 1 : pageNumber
                         }&limit=${userPerPage}`,
                         {},

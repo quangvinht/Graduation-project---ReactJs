@@ -27,7 +27,7 @@ function UserCard({ id, data, className, onClick = false, onDoubleClick = false,
 
     const handleDeleteUser = (id) => {
         axios
-            .delete(`http://localhost:8080/user/all/${id}`)
+            .delete(`${process.env.REACT_APP_BASE_URL_API}user/all/${id}`)
             .then((response) => {
                 alert('Xóa thành viên thành công:', data.email);
                 window.location.reload();

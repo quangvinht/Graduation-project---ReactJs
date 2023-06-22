@@ -40,7 +40,7 @@ function ProfileEdit({}) {
     //     const getProfileUser = async () => {
     //         await axios({
     //             method: 'get',
-    //             url: `http://localhost:8080/user/all/${idUserInfor}`,
+    //             url: `${process.env.REACT_APP_BASE_URL_API}user/all/${idUserInfor}`,
     //         })
     //             .then((response) => {
     //                 setUserName(response.data.userName);
@@ -76,7 +76,7 @@ function ProfileEdit({}) {
         }
 
         axios
-            .patch(`http://localhost:8080/user/all/${idUserInfor}`, {
+            .patch(`${process.env.REACT_APP_BASE_URL_API}user/all/${idUserInfor}`, {
                 userName,
                 email,
                 password,
@@ -89,13 +89,13 @@ function ProfileEdit({}) {
                 //after edit then set user infor again:
                 navigate('/profile');
                 axios
-                    .post('http://localhost:8080/auth/login', { email, password })
+                    .post(`${process.env.REACT_APP_BASE_URL_API}auth/login`, { email, password })
                     .then((response) => {
                         if (response.data.access_token) {
                             localStorage.setItem('user', JSON.stringify(response.data.access_token));
                             // get access token:
                             axios
-                                .get('http://localhost:8080/profile', {
+                                .get('${process.env.REACT_APP_BASE_URL_API}profile', {
                                     headers: {
                                         Authorization: `Bearer ${JSON.parse(localStorage.getItem('user'))}`,
                                     },
@@ -105,7 +105,7 @@ function ProfileEdit({}) {
                                     //get infor of user :
                                     axios({
                                         method: 'get',
-                                        url: `http://localhost:8080/user/all/${response.data.sub}`,
+                                        url: `${process.env.REACT_APP_BASE_URL_API}user/all/${response.data.sub}`,
                                     })
                                         .then((response) => {
                                             //setData(response.data);

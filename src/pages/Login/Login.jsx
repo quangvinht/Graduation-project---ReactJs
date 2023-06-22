@@ -39,13 +39,13 @@ const Login = () => {
 
         //Login:
         await axios
-            .post('http://localhost:8080/auth/login', { email, password })
+            .post(`${process.env.REACT_APP_BASE_URL_API}auth/login`, { email, password })
             .then((response) => {
                 if (response.data.access_token) {
                     localStorage.setItem('user', JSON.stringify(response.data.access_token));
                     // get access token:
                     axios
-                        .get('http://localhost:8080/profile', {
+                        .get(`${process.env.REACT_APP_BASE_URL_API}profile`, {
                             headers: {
                                 Authorization: `Bearer ${JSON.parse(localStorage.getItem('user'))}`,
                             },
@@ -55,7 +55,7 @@ const Login = () => {
                             //get infor of user :
                             axios({
                                 method: 'get',
-                                url: `http://localhost:8080/user/all/${response.data.sub}`,
+                                url: `${process.env.REACT_APP_BASE_URL_API}user/all/${response.data.sub}`,
                             })
                                 .then((response) => {
                                     //setData(response.data);
@@ -78,7 +78,7 @@ const Login = () => {
             });
 
         // axios
-        //     .get('http://localhost:8080/profile', {
+        //     .get('${process.env.REACT_APP_BASE_URL_API}profile', {
         //         headers: {
         //             Authorization: `Bearer ${localStorage.getItem('user')}`,
         //         },

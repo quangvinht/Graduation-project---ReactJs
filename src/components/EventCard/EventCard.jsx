@@ -49,7 +49,7 @@ function EventCard({ data, className, onClick = false, onDoubleClick = false, di
 
     const handleDeleteEvent = (id) => {
         axios
-            .delete(`http://localhost:8080/event/all/${id}`)
+            .delete(`${process.env.REACT_APP_BASE_URL_API}event/all/${id}`)
             .then((response) => {
                 alert('Xóa sự kiện thành công:', data.title);
                 window.location.reload();
@@ -63,7 +63,7 @@ function EventCard({ data, className, onClick = false, onDoubleClick = false, di
         //add participant:
 
         await axios
-            .patch(`http://localhost:8080/event/all/${data._id}`, {
+            .patch(`${process.env.REACT_APP_BASE_URL_API}event/all/${data._id}`, {
                 participants: [...participants, profile._id],
             })
             .then((response) => {
@@ -79,10 +79,10 @@ function EventCard({ data, className, onClick = false, onDoubleClick = false, di
         // add eventJoined:
 
         // await axios
-        //     .get(`http://localhost:8080/user/all/${profile._id}`)
+        //     .get(`${process.env.REACT_APP_BASE_URL_API}user/all/${profile._id}`)
         //     .then((response) => {
         //         axios
-        //             .patch(`http://localhost:8080/user/all/${response.data._id}`, {
+        //             .patch(`${process.env.REACT_APP_BASE_URL_API}user/all/${response.data._id}`, {
         //                 eventsJoined: [...response.data.eventsJoined, data._id],
         //             })
         //             .then((response) => {

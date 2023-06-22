@@ -26,7 +26,9 @@ function EventList({}) {
             if (searchValue.length === 0) {
                 await axios
                     .get(
-                        `http://localhost:8080/event?page=${pageNumber === 0 ? 1 : pageNumber}&limit=${eventPerPage}`,
+                        `${process.env.REACT_APP_BASE_URL_API}event?page=${
+                            pageNumber === 0 ? 1 : pageNumber
+                        }&limit=${eventPerPage}`,
                         {},
                     )
                     .then((response) => {
@@ -39,7 +41,7 @@ function EventList({}) {
             } else {
                 await axios
                     .get(
-                        `http://localhost:8080/event/search/${searchValue}?page=${
+                        `${process.env.REACT_APP_BASE_URL_API}event/search/${searchValue}?page=${
                             pageNumber === 0 ? 1 : pageNumber
                         }&limit=${eventPerPage}`,
                         {},

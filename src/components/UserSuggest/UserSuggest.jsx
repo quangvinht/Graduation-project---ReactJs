@@ -61,7 +61,7 @@ function UserSuggest({ isUpdated, csvData }) {
         setLoading(true);
         const getAPIEvent = async () => {
             await axios
-                .get(`http://localhost:8080/user/all`)
+                .get(`${process.env.REACT_APP_BASE_URL_API}user/all`)
                 .then((response) => {
                     setOptions(
                         response.data.map((data) => {
