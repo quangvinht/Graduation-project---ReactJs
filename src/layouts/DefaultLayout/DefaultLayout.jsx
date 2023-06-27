@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import 'react-toastify/dist/ReactToastify.css';
-import SideBar from '../components/SideBar';
+import SideBar from '~/layouts/components/SideBar';
 
 const cx = classNames.bind(styles);
 
